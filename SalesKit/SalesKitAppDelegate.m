@@ -7,7 +7,7 @@
 //
 
 #import "SalesKitAppDelegate.h"
-#import "MainViewController.h"
+//#import "MainViewController.h"
 #import "SettingViewController.h"
 #import "SyncManager.h"
 

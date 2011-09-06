@@ -28,6 +28,25 @@
 		5506E398140D523200A61422 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E394140D523200A61422 /* ASIDataCompressor.m */; };
 		5506E39C140E426500A61422 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E39B140E426500A61422 /* JSONKit.m */; };
 		5506E39E140E94C400A61422 /* setting_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5506E39D140E94C400A61422 /* setting_bg.png */; };
+		55449C4C1416B7E5009C2217 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 55449C4B1416B7E5009C2217 /* Default-Landscape~ipad.png */; };
+		55449C5F1416B832009C2217 /* ClothTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C501416B832009C2217 /* ClothTransition.m */; };
+		55449C601416B832009C2217 /* DoorsTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C521416B832009C2217 /* DoorsTransition.m */; };
+		55449C611416B832009C2217 /* FlipTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C541416B832009C2217 /* FlipTransition.m */; };
+		55449C621416B832009C2217 /* HMGLTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C561416B832009C2217 /* HMGLTransition.m */; };
+		55449C631416B832009C2217 /* HMGLTransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C581416B832009C2217 /* HMGLTransitionManager.m */; };
+		55449C641416B832009C2217 /* HMGLTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C5A1416B832009C2217 /* HMGLTransitionView.m */; };
+		55449C651416B832009C2217 /* RotateTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C5C1416B832009C2217 /* RotateTransition.m */; };
+		55449C661416B832009C2217 /* Switch3DTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C5E1416B832009C2217 /* Switch3DTransition.m */; };
+		55449C6A1416B897009C2217 /* Mockup02ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C681416B897009C2217 /* Mockup02ViewController.m */; };
+		55449C6B1416B897009C2217 /* Mockup02ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55449C691416B897009C2217 /* Mockup02ViewController.xib */; };
+		55449C721416B92E009C2217 /* WebViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C711416B92E009C2217 /* WebViewVC.m */; };
+		55449C751416B942009C2217 /* MenuCoverVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C741416B942009C2217 /* MenuCoverVC.m */; };
+		55449C7D1416B95A009C2217 /* MenuBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C771416B95A009C2217 /* MenuBarVC.m */; };
+		55449C7E1416B95A009C2217 /* ItemBarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C791416B95A009C2217 /* ItemBarVC.m */; };
+		55449C7F1416B95A009C2217 /* ItemBarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55449C7A1416B95A009C2217 /* ItemBarVC.xib */; };
+		55449C801416B95A009C2217 /* ItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C7C1416B95A009C2217 /* ItemVC.m */; };
+		55449C8C1416BA5D009C2217 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55449C8A1416BA5D009C2217 /* OpenGLES.framework */; };
+		55449C8D1416BA5D009C2217 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55449C8B1416BA5D009C2217 /* QuartzCore.framework */; };
 		557D67AD14082A2F0040E6E6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557D67AC14082A2F0040E6E6 /* UIKit.framework */; };
 		557D67AF14082A2F0040E6E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557D67AE14082A2F0040E6E6 /* Foundation.framework */; };
 		557D67B114082A2F0040E6E6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557D67B014082A2F0040E6E6 /* CoreGraphics.framework */; };
@@ -84,6 +103,40 @@
 		5506E39A140E426500A61422 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		5506E39B140E426500A61422 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		5506E39D140E94C400A61422 /* setting_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_bg.png; sourceTree = "<group>"; };
+		55449C4B1416B7E5009C2217 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		55449C4F1416B832009C2217 /* ClothTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClothTransition.h; sourceTree = "<group>"; };
+		55449C501416B832009C2217 /* ClothTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClothTransition.m; sourceTree = "<group>"; };
+		55449C511416B832009C2217 /* DoorsTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoorsTransition.h; sourceTree = "<group>"; };
+		55449C521416B832009C2217 /* DoorsTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorsTransition.m; sourceTree = "<group>"; };
+		55449C531416B832009C2217 /* FlipTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlipTransition.h; sourceTree = "<group>"; };
+		55449C541416B832009C2217 /* FlipTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlipTransition.m; sourceTree = "<group>"; };
+		55449C551416B832009C2217 /* HMGLTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGLTransition.h; sourceTree = "<group>"; };
+		55449C561416B832009C2217 /* HMGLTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGLTransition.m; sourceTree = "<group>"; };
+		55449C571416B832009C2217 /* HMGLTransitionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGLTransitionManager.h; sourceTree = "<group>"; };
+		55449C581416B832009C2217 /* HMGLTransitionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGLTransitionManager.m; sourceTree = "<group>"; };
+		55449C591416B832009C2217 /* HMGLTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMGLTransitionView.h; sourceTree = "<group>"; };
+		55449C5A1416B832009C2217 /* HMGLTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMGLTransitionView.m; sourceTree = "<group>"; };
+		55449C5B1416B832009C2217 /* RotateTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotateTransition.h; sourceTree = "<group>"; };
+		55449C5C1416B832009C2217 /* RotateTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotateTransition.m; sourceTree = "<group>"; };
+		55449C5D1416B832009C2217 /* Switch3DTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Switch3DTransition.h; sourceTree = "<group>"; };
+		55449C5E1416B832009C2217 /* Switch3DTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Switch3DTransition.m; sourceTree = "<group>"; };
+		55449C671416B897009C2217 /* Mockup02ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mockup02ViewController.h; sourceTree = "<group>"; };
+		55449C681416B897009C2217 /* Mockup02ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mockup02ViewController.m; sourceTree = "<group>"; };
+		55449C691416B897009C2217 /* Mockup02ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Mockup02ViewController.xib; sourceTree = "<group>"; };
+		55449C701416B92E009C2217 /* WebViewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewVC.h; sourceTree = "<group>"; };
+		55449C711416B92E009C2217 /* WebViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewVC.m; sourceTree = "<group>"; };
+		55449C731416B942009C2217 /* MenuCoverVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCoverVC.h; sourceTree = "<group>"; };
+		55449C741416B942009C2217 /* MenuCoverVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCoverVC.m; sourceTree = "<group>"; };
+		55449C761416B95A009C2217 /* MenuBarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuBarVC.h; sourceTree = "<group>"; };
+		55449C771416B95A009C2217 /* MenuBarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuBarVC.m; sourceTree = "<group>"; };
+		55449C781416B95A009C2217 /* ItemBarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemBarVC.h; sourceTree = "<group>"; };
+		55449C791416B95A009C2217 /* ItemBarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemBarVC.m; sourceTree = "<group>"; };
+		55449C7A1416B95A009C2217 /* ItemBarVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ItemBarVC.xib; sourceTree = "<group>"; };
+		55449C7B1416B95A009C2217 /* ItemVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemVC.h; sourceTree = "<group>"; };
+		55449C7C1416B95A009C2217 /* ItemVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemVC.m; sourceTree = "<group>"; };
+		55449C811416B96D009C2217 /* UIConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIConfig.h; sourceTree = "<group>"; };
+		55449C8A1416BA5D009C2217 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		55449C8B1416BA5D009C2217 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		557D67A814082A2F0040E6E6 /* SalesKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalesKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		557D67AC14082A2F0040E6E6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		557D67AE14082A2F0040E6E6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -115,6 +168,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55449C8C1416BA5D009C2217 /* OpenGLES.framework in Frameworks */,
+				55449C8D1416BA5D009C2217 /* QuartzCore.framework in Frameworks */,
 				5506E384140D4E7700A61422 /* libz.1.2.3.dylib in Frameworks */,
 				5506E380140D4E2E00A61422 /* CFNetwork.framework in Frameworks */,
 				5506E381140D4E2E00A61422 /* MobileCoreServices.framework in Frameworks */,
@@ -229,9 +284,73 @@
 			name = JSONKit;
 			sourceTree = "<group>";
 		};
+		55449C4E1416B832009C2217 /* HMGLTransitions */ = {
+			isa = PBXGroup;
+			children = (
+				55449C4F1416B832009C2217 /* ClothTransition.h */,
+				55449C501416B832009C2217 /* ClothTransition.m */,
+				55449C511416B832009C2217 /* DoorsTransition.h */,
+				55449C521416B832009C2217 /* DoorsTransition.m */,
+				55449C531416B832009C2217 /* FlipTransition.h */,
+				55449C541416B832009C2217 /* FlipTransition.m */,
+				55449C551416B832009C2217 /* HMGLTransition.h */,
+				55449C561416B832009C2217 /* HMGLTransition.m */,
+				55449C571416B832009C2217 /* HMGLTransitionManager.h */,
+				55449C581416B832009C2217 /* HMGLTransitionManager.m */,
+				55449C591416B832009C2217 /* HMGLTransitionView.h */,
+				55449C5A1416B832009C2217 /* HMGLTransitionView.m */,
+				55449C5B1416B832009C2217 /* RotateTransition.h */,
+				55449C5C1416B832009C2217 /* RotateTransition.m */,
+				55449C5D1416B832009C2217 /* Switch3DTransition.h */,
+				55449C5E1416B832009C2217 /* Switch3DTransition.m */,
+			);
+			path = HMGLTransitions;
+			sourceTree = "<group>";
+		};
+		55449C6C1416B8D0009C2217 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				55449C701416B92E009C2217 /* WebViewVC.h */,
+				55449C711416B92E009C2217 /* WebViewVC.m */,
+			);
+			name = WebView;
+			sourceTree = "<group>";
+		};
+		55449C6D1416B8F6009C2217 /* MenuCover */ = {
+			isa = PBXGroup;
+			children = (
+				55449C731416B942009C2217 /* MenuCoverVC.h */,
+				55449C741416B942009C2217 /* MenuCoverVC.m */,
+			);
+			name = MenuCover;
+			sourceTree = "<group>";
+		};
+		55449C6E1416B8FF009C2217 /* SubMenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				55449C761416B95A009C2217 /* MenuBarVC.h */,
+				55449C771416B95A009C2217 /* MenuBarVC.m */,
+				55449C781416B95A009C2217 /* ItemBarVC.h */,
+				55449C791416B95A009C2217 /* ItemBarVC.m */,
+				55449C7A1416B95A009C2217 /* ItemBarVC.xib */,
+				55449C7B1416B95A009C2217 /* ItemVC.h */,
+				55449C7C1416B95A009C2217 /* ItemVC.m */,
+			);
+			name = SubMenuBar;
+			sourceTree = "<group>";
+		};
+		55449C6F1416B914009C2217 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				55449C811416B96D009C2217 /* UIConfig.h */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
 		557D679D14082A2D0040E6E6 = {
 			isa = PBXGroup;
 			children = (
+				55449C4B1416B7E5009C2217 /* Default-Landscape~ipad.png */,
 				557D67B414082A2F0040E6E6 /* SalesKit */,
 				557D67AB14082A2F0040E6E6 /* Frameworks */,
 				557D67A914082A2F0040E6E6 /* Products */,
@@ -250,6 +369,8 @@
 			isa = PBXGroup;
 			children = (
 				5506E383140D4E7700A61422 /* libz.1.2.3.dylib */,
+				55449C8A1416BA5D009C2217 /* OpenGLES.framework */,
+				55449C8B1416BA5D009C2217 /* QuartzCore.framework */,
 				5506E37D140D4E2B00A61422 /* CFNetwork.framework */,
 				5506E37E140D4E2D00A61422 /* MobileCoreServices.framework */,
 				5506E37F140D4E2D00A61422 /* SystemConfiguration.framework */,
@@ -264,16 +385,24 @@
 		557D67B414082A2F0040E6E6 /* SalesKit */ = {
 			isa = PBXGroup;
 			children = (
+				55449C4E1416B832009C2217 /* HMGLTransitions */,
 				5506E374140D480200A61422 /* NetworkManager */,
 				5506E356140D2D3200A61422 /* Settings Control */,
 				5506E34F140CCDFB00A61422 /* ModelObjects */,
 				5506E33D140CC66600A61422 /* Sync */,
+				55449C6C1416B8D0009C2217 /* WebView */,
+				55449C6F1416B914009C2217 /* Config */,
+				55449C6E1416B8FF009C2217 /* SubMenuBar */,
+				55449C6D1416B8F6009C2217 /* MenuCover */,
 				557D67BD14082A2F0040E6E6 /* SalesKitAppDelegate.h */,
 				557D67BE14082A2F0040E6E6 /* SalesKitAppDelegate.m */,
 				557D67C014082A2F0040E6E6 /* MainWindow.xib */,
 				5506E35C140D302C00A61422 /* MainViewController.h */,
 				5506E35D140D302C00A61422 /* MainViewController.m */,
 				5506E35E140D302D00A61422 /* MainViewController.xib */,
+				55449C671416B897009C2217 /* Mockup02ViewController.h */,
+				55449C681416B897009C2217 /* Mockup02ViewController.m */,
+				55449C691416B897009C2217 /* Mockup02ViewController.xib */,
 				557D67C314082A2F0040E6E6 /* SalesKit.xcdatamodeld */,
 				5506E361140D3D5100A61422 /* Images */,
 				557D67B514082A2F0040E6E6 /* Supporting Files */,
@@ -370,6 +499,9 @@
 				5506E35B140D2D7000A61422 /* SettingViewController.xib in Resources */,
 				5506E360140D302D00A61422 /* MainViewController.xib in Resources */,
 				5506E39E140E94C400A61422 /* setting_bg.png in Resources */,
+				55449C4C1416B7E5009C2217 /* Default-Landscape~ipad.png in Resources */,
+				55449C6B1416B897009C2217 /* Mockup02ViewController.xib in Resources */,
+				55449C7F1416B95A009C2217 /* ItemBarVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +534,20 @@
 				55F97C09140EFB3C000FAA00 /* unzip.c in Sources */,
 				55F97C0A140EFB3C000FAA00 /* zip.c in Sources */,
 				55F97C0B140EFB3C000FAA00 /* ZipArchive.mm in Sources */,
+				55449C5F1416B832009C2217 /* ClothTransition.m in Sources */,
+				55449C601416B832009C2217 /* DoorsTransition.m in Sources */,
+				55449C611416B832009C2217 /* FlipTransition.m in Sources */,
+				55449C621416B832009C2217 /* HMGLTransition.m in Sources */,
+				55449C631416B832009C2217 /* HMGLTransitionManager.m in Sources */,
+				55449C641416B832009C2217 /* HMGLTransitionView.m in Sources */,
+				55449C651416B832009C2217 /* RotateTransition.m in Sources */,
+				55449C661416B832009C2217 /* Switch3DTransition.m in Sources */,
+				55449C6A1416B897009C2217 /* Mockup02ViewController.m in Sources */,
+				55449C721416B92E009C2217 /* WebViewVC.m in Sources */,
+				55449C751416B942009C2217 /* MenuCoverVC.m in Sources */,
+				55449C7D1416B95A009C2217 /* MenuBarVC.m in Sources */,
+				55449C7E1416B95A009C2217 /* ItemBarVC.m in Sources */,
+				55449C801416B95A009C2217 /* ItemVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
