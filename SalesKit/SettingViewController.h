@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "SyncManager.h"
 
+@protocol SettingViewControllerDelegate <NSObject>
+
+@optional
+- (void)needSync:(BOOL)needSync;
+
+@end
+
 @interface SettingViewController : UIViewController 
 <SyncManagerDelegate>
 {
@@ -21,5 +28,6 @@
 + (SettingViewController *)shared;
 
 @property (nonatomic, retain) IBOutlet UIProgressView *progressView;
+@property (nonatomic, assign) id<SettingViewControllerDelegate>delegate;
 
 @end

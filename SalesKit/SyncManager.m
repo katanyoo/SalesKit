@@ -93,6 +93,9 @@ static SyncManager *shared = nil;
         itemCount = 0;
         [self setStatus:@"Have no item for update." onState:MIPSyncStatusFinish];
     }
+    if ([delegate respondsToSelector:@selector(syncManagerDidFinishSyncVersionWithItemCount:)]) {
+        [delegate syncManagerDidFinishSyncVersionWithItemCount:[self.updateList count]];
+    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request

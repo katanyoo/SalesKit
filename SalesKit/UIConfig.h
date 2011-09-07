@@ -19,3 +19,5 @@
 
 #define MAINSCROLL_TAG 111
 #define WEBVIEW_TAG 222
+
+#define MAINVIEW_TAG 123

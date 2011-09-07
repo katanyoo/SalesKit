@@ -52,6 +52,7 @@ typedef enum {
 
 @optional
 - (void)syncManagerDidFinishSyncVersionWithJSONString:(NSString *)responseString;
-- (void) updateStatus:(NSString *)status onState:(MIPSyncStatus)state;
+- (void)syncManagerDidFinishSyncVersionWithItemCount:(NSInteger)count;
+- (void)updateStatus:(NSString *)status onState:(MIPSyncStatus)state;
 
 @end

@@ -8,10 +8,12 @@
 
 #import "SettingViewController.h"
 #import "JSONKit.h"
+#import "UIConfig.h"
 
 @implementation SettingViewController
 
 @synthesize progressView;
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,6 +38,39 @@
 }
 
 #pragma mark - SyncManager Delegate
+
+- (void)syncManagerDidFinishSyncVersionWithItemCount:(NSInteger)count
+{
+    
+    if (count > 0) {
+        if ([delegate respondsToSelector:@selector(needSync:)]) {
+            [delegate needSync:YES];
+        }
+    }
+    else {
+        if ([delegate respondsToSelector:@selector(needSync:)]) {
+            [delegate needSync:NO];
+        }
+    }
+    /*
+    MIPLog(@"sync count = %i", count);
+    MIPLog(@"%@", [self.view viewWithTag:MAINVIEW_TAG]);
+    if (count > 0) {
+        
+        CGRect rect = [self.view viewWithTag:MAINVIEW_TAG].bounds;
+        rect.origin = CGPointMake(0, 200);
+        
+        [UIView beginAnimations:nil context:nil]; 
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.5]; 
+        
+        //[self.view viewWithTag:MAINVIEW_TAG].frame = rect;
+        
+        [UIView commitAnimations];
+         
+    }
+     */
+}
 
 - (void)syncManagerDidFinishSyncVersionWithJSONString:(NSString *)responseString
 {
@@ -104,7 +139,10 @@ static SettingViewController *shared = nil;
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:bg];
     
+    //[self.view viewWithTag:MAINVIEW_TAG].frame = CGRectMake(0, 0, 1024, 768);
+    
     [SyncManager shared].delegate = self;
+    [self startSync];
     
 }
 
@@ -118,7 +156,7 @@ static SettingViewController *shared = nil;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-	return YES;
+	return interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight;
 }
 
 @end

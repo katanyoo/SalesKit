@@ -165,6 +165,8 @@ static NSString *pageNameKey = @"pagename";
     mainScroll.contentSize = CGSizeMake(LANDSCAPE_WIDTH * [self.menus count],
                                         LANDSCAPE_HEIGHT);
     
+    //mainScroll.frame = CGRectMake(0, 100, 1024, 668);
+    
     [self loadScrollViewWithPage:0];
     [self loadScrollViewWithPage:1];
 }

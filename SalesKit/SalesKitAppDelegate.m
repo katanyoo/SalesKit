@@ -7,9 +7,10 @@
 //
 
 #import "SalesKitAppDelegate.h"
-//#import "MainViewController.h"
+#import "MainViewController.h"
 #import "SettingViewController.h"
 #import "SyncManager.h"
+#import "UIConfig.h"
 
 @implementation SalesKitAppDelegate
 
@@ -25,14 +26,29 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    SettingViewController *settingVC = [SettingViewController shared];
-    self.window.rootViewController = settingVC;
+    //SettingViewController *settingVC = [SettingViewController shared];
+    //self.window.rootViewController = settingVC;
     
     [SyncManager shared].managedObjectContext = self.managedObjectContext;
-
-
-    //MainViewController *mainVC = [[MainViewController alloc] init];
     
+    //[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:NO];
+    
+    MainViewController *mainVC = [[MainViewController alloc] init];
+    //mainVC.view.bounds = CGRectMake(0, 0, 1024, 748);
+    self.window.rootViewController = mainVC;
+    //mainVC.view.bounds = settingVC.view.bounds;
+    //mainVC.view.tag = MAINVIEW_TAG;
+    
+    /*
+    CGAffineTransform rotate = CGAffineTransformMakeRotation(M_PI/2.0);
+    [mainVC.view setTransform:rotate];
+    CGRect contentRect = CGRectMake(0, 0, 1024, 748); 
+    mainVC.view.bounds = contentRect; 
+    [mainVC.view setCenter:CGPointMake(768/2, 1024/2)];
+    */
+    //[settingVC.view addSubview:mainVC.view];
+
+    //[self.window addSubview:mainVC.view];
     [self.window makeKeyAndVisible];
     
     return YES;
