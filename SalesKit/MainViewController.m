@@ -185,6 +185,18 @@
         
         [UIView commitAnimations];
     }
+    else {
+        CGRect rect = mainScrollVC.view.frame;
+        rect.origin = CGPointMake(0, 0);
+        
+        [UIView beginAnimations:nil context:nil]; 
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.5]; 
+        
+        mainScrollVC.view.frame = rect;
+        
+        [UIView commitAnimations];
+    }
 }
 
 #pragma mark - WebViewVC Delegate

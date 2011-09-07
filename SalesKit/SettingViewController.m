@@ -37,20 +37,31 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void) endSync
+{
+    if ([delegate respondsToSelector:@selector(needSync:)]) {
+        [delegate needSync:NO];
+    }
+}
+
 #pragma mark - SyncManager Delegate
+
+- (void)syncManagerDidFinishUpdateDatabase
+{
+    [self endSync];
+}
 
 - (void)syncManagerDidFinishSyncVersionWithItemCount:(NSInteger)count
 {
-    
+
+    MIPLog(@"count = %i", count);    
     if (count > 0) {
         if ([delegate respondsToSelector:@selector(needSync:)]) {
             [delegate needSync:YES];
         }
     }
     else {
-        if ([delegate respondsToSelector:@selector(needSync:)]) {
-            [delegate needSync:NO];
-        }
+        [self endSync];
     }
     /*
     MIPLog(@"sync count = %i", count);

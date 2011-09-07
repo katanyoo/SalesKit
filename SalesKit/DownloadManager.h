@@ -10,6 +10,8 @@
 
 @class ASINetworkQueue;
 
+@protocol DownloadManagerDelegate;
+
 @interface DownloadManager : NSObject {
     
     ASINetworkQueue *networkQueue;
@@ -18,5 +20,17 @@
 
 + (DownloadManager *) shared;
 - (void) startDownloadWithList:(NSArray *)downloadList;
+
+@property (nonatomic, assign) id<DownloadManagerDelegate> delegate;
+
+@end
+
+
+@protocol DownloadManagerDelegate <NSObject>
+
+@optional
+- (void) downloadManager:(DownloadManager *)downloadManager didFinishDownloadWithPath:(NSString *)destinationPath;
+- (void) downloadManager:(DownloadManager *)downloadManager didFailDownloadWithPath:(NSString *)destinationPath error:(NSString *)errorMessage;
+
 
 @end

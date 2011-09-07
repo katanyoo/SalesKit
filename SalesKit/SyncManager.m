@@ -87,6 +87,7 @@ static SyncManager *shared = nil;
     self.updateList = [filtered sortedArrayUsingDescriptors:sortDescriptors];
     if ([self.updateList count] > 0) {
         itemCount = [self.updateList count];
+        [DownloadManager shared].delegate = self;
         [[DownloadManager shared] startDownloadWithList:self.updateList];
     }
     else {
@@ -104,6 +105,23 @@ static SyncManager *shared = nil;
     [self setStatus:[error localizedDescription] onState:MIPSyncStatusError];
 }
 
+#pragma mark - Download Manager Delegate
+
+- (void)downloadManager:(DownloadManager *)downloadManager didFinishDownloadWithPath:(NSString *)destinationPath {
+    
+    ZipArchive *zipper = [[ZipArchive alloc] init];
+    zipper.delegate = self;
+    
+    if ([zipper UnzipOpenFile:destinationPath]) {
+        [zipper UnzipFileTo:[destinationPath stringByDeletingLastPathComponent] 
+                  overWrite:YES];
+    }
+}
+
+- (void) downloadManager:(DownloadManager *)downloadManager didFailDownloadWithPath:(NSString *)destinationPath error:(NSString *)errorMessage {
+    [self setStatus:errorMessage onState:MIPSyncStatusError];
+}
+
 #pragma  mark -
 
 - (void)startSyncWithURL:(NSURL *)url
@@ -115,17 +133,6 @@ static SyncManager *shared = nil;
 {
     if ([delegate respondsToSelector:@selector(updateStatus:onState:)]) {
         [delegate updateStatus:status onState:state];
-    }
-}
-
-- (void) downloadFinish:(NSString *)destinationPath
-{
-    ZipArchive *zipper = [[ZipArchive alloc] init];
-    zipper.delegate = self;
-    
-    if ([zipper UnzipOpenFile:destinationPath]) {
-        [zipper UnzipFileTo:[destinationPath stringByDeletingLastPathComponent] 
-                  overWrite:YES];
     }
 }
 
@@ -160,7 +167,7 @@ static SyncManager *shared = nil;
     return nil;
 }
 
-- (void) addMenuItem:(NSDictionary *)menuItem
+- (BOOL) addMenuItem:(NSDictionary *)menuItem
 {
     MenuItem *mItem = [self menuID:[menuItem objectForKey:@"id"]];
     if (!mItem) {
@@ -185,15 +192,17 @@ static SyncManager *shared = nil;
     NSError *error;
     if(![self.managedObjectContext save:&error]) {
         MIPLog(@"Can't add new menu item");
+        return NO;
     }
     else {
         MIPLog(@"Save data ok");
+        return YES;
     }
 }
 
-- (void) setDataToDatabase
+- (BOOL) setDataToDatabase
 {
-    
+    BOOL success = YES;
     for (NSDictionary *versionItem in self.updateList) {
         MIPLog(@"%@", versionItem);
         
@@ -214,13 +223,19 @@ static SyncManager *shared = nil;
         
         for (NSDictionary *menuItem in menuData) {
             if ([[menuItem objectForKey:@"action"] isEqualToString:@"add"]) {
-                [self addMenuItem:menuItem];
+                if ([self addMenuItem:menuItem] && success) {
+                    success = YES;
+                }
+                else {
+                    success = NO;
+                }
             }
             else if ([[menuItem objectForKey:@"action"] isEqualToString:@"remove"]){
                 
             }
         }
     }
+    return success;
 }
 
 #pragma mark - Zip Delegate
@@ -238,7 +253,14 @@ static SyncManager *shared = nil;
     
     MIPLog(@"%i", itemCount);
     if (itemCount == 0) {
-        [self setDataToDatabase];
+        if ([self setDataToDatabase]) {
+            if ([delegate respondsToSelector:@selector(syncManagerDidFinishUpdateDatabase)]) {
+                [delegate syncManagerDidFinishUpdateDatabase];
+            }
+        }
+        else {
+            
+        }
     }
 }
 

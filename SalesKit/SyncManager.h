@@ -20,7 +20,7 @@ typedef enum {
 @protocol SyncManagerDelegate;
 
 @interface SyncManager : NSObject 
-<ZipArchiveDelegate>
+<ZipArchiveDelegate, DownloadManagerDelegate>
 {
 
     NSInteger currentVersion;
@@ -36,7 +36,7 @@ typedef enum {
 - (void)grabURLInBackground:(NSURL *)url;
 - (void)startSyncWithURL:(NSURL *)url;
 - (void)setStatus:(NSString *)status onState:(MIPSyncStatus)state;
-- (void) downloadFinish:(NSString *)destinationPath;
+//- (void)downloadFinish:(NSString *)destinationPath;
 
 //@property (nonatomic, retain) NSArray *updateList;
 @property (nonatomic, assign) id<SyncManagerDelegate> delegate;
@@ -53,6 +53,8 @@ typedef enum {
 @optional
 - (void)syncManagerDidFinishSyncVersionWithJSONString:(NSString *)responseString;
 - (void)syncManagerDidFinishSyncVersionWithItemCount:(NSInteger)count;
+- (void)syncManagerDidFinishUpdateDatabase;
+- (void)syncManagerDidFailUpdateDatabase;
 - (void)updateStatus:(NSString *)status onState:(MIPSyncStatus)state;
 
 @end

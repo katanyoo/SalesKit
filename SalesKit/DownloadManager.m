@@ -16,6 +16,8 @@
 
 @implementation DownloadManager
 
+@synthesize delegate;
+
 - (void) startDownloadWithList:(NSArray *)downloadList
 {
     
@@ -59,14 +61,27 @@
     
     NSFileManager *fileManger = [NSFileManager defaultManager];
     if ([fileManger fileExistsAtPath:destinationFile]) {
-        [[SyncManager shared] downloadFinish:destinationFile];
+        //[[SyncManager shared] downloadFinish:destinationFile];
+        if ([delegate respondsToSelector:@selector(downloadManager:didFinishDownloadWithPath:)]) {
+            [delegate downloadManager:self didFinishDownloadWithPath:destinationFile];
+        }
+    }
+    else {
+        if ([delegate respondsToSelector:@selector(downloadManager:didFailDownloadWithPath:error:)]) {
+            [delegate downloadManager:self didFailDownloadWithPath:destinationFile error:@"Have no downloaded file"];
+        }
     }
 }
 
 - (void)downloadFailed:(ASIHTTPRequest *)request
 {
     NSError *error = [request error];
-    [[SyncManager shared] setStatus:[error localizedDescription] onState:MIPSyncStatusError]; 
+    //[[SyncManager shared] setStatus:[error localizedDescription] onState:MIPSyncStatusError]; 
+    
+    NSString *destinationFile = [request downloadDestinationPath];
+    if ([delegate respondsToSelector:@selector(downloadManager:didFailDownloadWithPath:error:)]) {
+        [delegate downloadManager:self didFailDownloadWithPath:destinationFile error:[error localizedDescription]];
+    }
 }
 
 #pragma mark - Shared Method
