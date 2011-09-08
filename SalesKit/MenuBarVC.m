@@ -14,6 +14,7 @@
 
 @synthesize viewList;
 @synthesize menus;
+@synthesize managedObjectContext;
 @synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -42,10 +43,36 @@
 
 - (void)readData
 {
+    /*
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Menu" ofType:@"plist"];
     NSDictionary *menuData = [NSDictionary dictionaryWithContentsOfFile:filePath];
     self.menus = [menuData objectForKey:@"menu"];
+    */
     
+    if (self.menus) {
+        [self.menus release];
+        self.menus = nil;
+        self.menus = [NSArray array];
+    }
+    SalesKitAppDelegate *appDelegate = (SalesKitAppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = appDelegate.managedObjectContext;
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"MenuItem" inManagedObjectContext:self.managedObjectContext];
+    [request setEntity:entity];
+    
+    NSError *error;
+    NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    
+    if (mutableFetchResults == nil) {
+        MIPLog(@"Couldn't fetch data");
+    }
+    else if ([mutableFetchResults count] == 0) {
+        MIPLog(@"Have no data");
+    }
+    else {
+        self.menus = [mutableFetchResults mutableCopy];
+    }
 }
 
 #pragma mark - ItemBar Delegate
@@ -87,9 +114,14 @@
                                   self.view.bounds.size.width,
                                   self.view.bounds.size.height);
         itemBar.view.frame = frame;
-        itemBar.view.backgroundColor = [UIColor clearColor];
+        //itemBar.view.backgroundColor = [UIColor clearColor];
+        itemBar.view.backgroundColor = [UIColor colorWithRed:0.1 * page
+                                                       green:0.5
+                                                        blue:0.2
+                                                       alpha:1.0];
         
-        NSArray *items = [[self.menus objectAtIndex:page] objectForKey:@"items"];
+        NSArray *items = [[((MenuItem *)[self.menus objectAtIndex:page]) subMenuItems] allObjects];
+        MIPLog(@"item count = %i", [items count]);
         [itemBar setupBarWithItems:items];
         
         [menuBarScroll addSubview:itemBar.view];
@@ -150,15 +182,8 @@
 {
 }
 */
-
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
+- (void) reloadView
 {
-    [super viewDidLoad];
-
-    self.view.backgroundColor = [UIColor clearColor];
-    
     [self readData];
     
     NSMutableArray *views = [[NSMutableArray alloc] init];
@@ -171,13 +196,23 @@
     
     UIScrollView *tempScrollView=(UIScrollView *)self.view;
     tempScrollView.delegate = self;
-
+    
     tempScrollView.frame = CGRectMake(0, LANDSCAPE_HEIGHT - MENUBAR_HEIGHT, LANDSCAPE_WIDTH, MENUBAR_HEIGHT);
     tempScrollView.contentSize = CGSizeMake(LANDSCAPE_WIDTH * [self.menus count],
                                             MENUBAR_HEIGHT);
     
     [self loadScrollViewWithPage:0];
     [self loadScrollViewWithPage:1];
+}
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.view.backgroundColor = [UIColor clearColor];
+    
+    [self reloadView];
 }
 
 

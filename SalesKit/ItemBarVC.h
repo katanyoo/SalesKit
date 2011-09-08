@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ItemVC.h"
+#import "SubMenuItem.h"
 
 @protocol ItemBarVCDelegate <NSObject>
 

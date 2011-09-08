@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SalesKitAppDelegate.h"
 #import "ItemBarVC.h"
+#import "MenuItem.h"
+#import "SubMenuItem.h"
 
 @protocol MenuBarVCDelegate <NSObject>
 
@@ -28,8 +31,10 @@
 
 @property (nonatomic, retain) NSMutableArray *viewList;
 @property (nonatomic, retain) NSArray *menus;
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, assign) id<MenuBarVCDelegate> delegate;
 
+- (void) reloadView;
 - (void)scrollToPage:(NSInteger)page;
 
 @end

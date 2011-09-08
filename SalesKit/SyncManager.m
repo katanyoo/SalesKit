@@ -175,12 +175,13 @@ static SyncManager *shared = nil;
         mItem.menuid = [menuItem objectForKey:@"id"];
         mItem.cover = [self.menuPath stringByAppendingPathComponent:
                        [menuItem objectForKey:@"cover"]];
+        mItem.pageName = [menuItem objectForKey:@"name"];
     }
 
     NSMutableSet *itemSet = [NSMutableSet set];
     for (NSDictionary *subItem in [menuItem objectForKey:@"items"]) {
         SubMenuItem *sItem = (SubMenuItem *)[NSEntityDescription insertNewObjectForEntityForName:@"SubMenuItem" inManagedObjectContext:self.managedObjectContext];
-        sItem.image = [self.linkPath stringByAppendingPathComponent:
+        sItem.image = [self.menuPath stringByAppendingPathComponent:
                        [subItem objectForKey:@"image"]];
         sItem.linkto = [self.linkPath stringByAppendingPathComponent:
                         [subItem objectForKey:@"linkto"]];

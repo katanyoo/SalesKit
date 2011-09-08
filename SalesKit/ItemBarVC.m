@@ -49,10 +49,15 @@
 
 - (void)setupBarWithItems:(NSArray *)buttonItems
 {
+    if (self.items) {
+        [self.items release];
+        self.items = nil;
+        self.items = [NSArray array];
+    }
     self.items = buttonItems;
     
     int orginX = 0;
-    for (NSDictionary *item in self.items) {
+    for (SubMenuItem *item in self.items) {
         ItemVC *itemVC = [[ItemVC alloc] initWithItem:item];
         itemVC.delegate = self;
         

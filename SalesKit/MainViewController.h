@@ -38,4 +38,7 @@ SettingViewControllerDelegate>
     //HMGLTransition *transition;
 }
 
+- (void) reloadView;
+
+
 @end

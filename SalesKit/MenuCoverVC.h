@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SalesKitAppDelegate.h"
+#import "MenuItem.h"
 
 @protocol MenuCoverVCDelegate <NSObject>
 
@@ -25,9 +27,10 @@
 
 @property (nonatomic, retain) NSMutableArray *viewList;
 @property (nonatomic, retain) NSArray *menus;
-
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, assign) id<MenuCoverVCDelegate> delegate;
 
 - (NSInteger) numberOfPage;
+- (void) reloadView;
 
 @end

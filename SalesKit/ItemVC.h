@@ -7,18 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SubMenuItem.h"
 
 @protocol ItemVCDelegate;
 
 @interface ItemVC : UIViewController {
 
-    NSDictionary *itemData;
+    SubMenuItem *itemData;
     UIButton *buttonItem;
 }
 
 @property (nonatomic, retain) id<ItemVCDelegate> delegate;
 
-- (id)initWithItem:(NSDictionary *)item;
+- (id)initWithItem:(SubMenuItem *)item;
 - (NSString *) URLForWeb;
 
 @end

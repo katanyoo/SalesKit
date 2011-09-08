@@ -12,6 +12,8 @@
 #import "Switch3DTransition.h"
 #import "SettingViewController.h"
 
+#define DOCUMENTSPATH [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
+
 @interface MainViewController()
 
 @property (nonatomic, retain) HMGLTransition *transition;
@@ -24,6 +26,7 @@
 
 @synthesize transition;
 @synthesize close_bt;
+
 
 - (void)dealloc
 {
@@ -176,6 +179,7 @@
         
         CGRect rect = mainScrollVC.view.frame;
         rect.origin = CGPointMake(0, 200);
+        //rect.origin = CGPointMake(0, 0);
         
         [UIView beginAnimations:nil context:nil]; 
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -196,6 +200,8 @@
         mainScrollVC.view.frame = rect;
         
         [UIView commitAnimations];
+        
+        [self reloadView];
     }
 }
 
@@ -220,12 +226,15 @@
 
 - (void)subItemDidSelected:(ItemVC *)item
 {    
-    NSString *htmlPath = [[NSBundle mainBundle] pathForResource:[item URLForWeb] ofType:@""];
+    //NSString *htmlPath = [[NSBundle mainBundle] pathForResource:[item URLForWeb] ofType:@""];
+    NSString *htmlPath = [DOCUMENTSPATH stringByAppendingPathComponent:[item URLForWeb]];
+    MIPLog(@"html path = %@", htmlPath);
     NSString *HTMLData = [NSString stringWithContentsOfFile:htmlPath
                                                    encoding:NSUTF8StringEncoding 
                                                       error:nil];
     
-    NSString *path = [[NSBundle mainBundle] bundlePath];
+    //NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSString *path = [htmlPath stringByDeletingLastPathComponent];
     NSURL *baseURL = [NSURL fileURLWithPath:path];
     
     [self.view addSubview:[self viewForEvent:@"Loading..."]];
@@ -236,19 +245,17 @@
 
 #pragma mark - View lifecycle
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
+- (void)reloadView
 {
-    [super viewDidLoad];
-    
     SettingViewController *settingVC = [SettingViewController shared];
     settingVC.delegate = self;
     [bigView addSubview:settingVC.view];
     
     mainScrollVC.delegate = self;
     mainScrollVC.view.tag = MAINSCROLL_TAG;
+    [mainScrollVC reloadView];
     [bigView addSubview:mainScrollVC.view];
-
+    
     
     //pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(-125, WEBVIEW_HEIGHT - PAGECONTROL_HEIGHT, PAGECONTROL_WIDTH, PAGECONTROL_HEIGHT)];
     
@@ -256,7 +263,7 @@
     pageControl.frame = CGRectMake(0, WEBVIEW_HEIGHT - pageControl.frame.size.height - 10,
                                    pageControl.frame.size.width, pageControl.frame.size.height);
     
-    [self.view addSubview:pageControl];
+    //[self.view addSubview:pageControl];
     //pageControl.backgroundColor = [UIColor blackColor];
     pageControl.currentPage = 0;
     //pageControl.numberOfPages = [mainScrollVC numberOfPage];
@@ -266,7 +273,7 @@
                                 WEBVIEW_HEIGHT - pageControl.frame.size.height - pageName.frame.size.height,
                                 pageName.frame.size.width, 
                                 pageName.frame.size.height);
-    [self.view addSubview:pageName];
+    //[self.view addSubview:pageName];
     
     UIWebView *web = (UIWebView *)webViewVC.view;
     web.delegate = self;
@@ -296,6 +303,7 @@
     
     
     menuBarVC.delegate = self;
+    [menuBarVC reloadView];
     [self.view addSubview:menuBarVC.view];   
     
     [HMGLTransitionManager sharedTransitionManager];
@@ -303,6 +311,12 @@
     self.transition = [[[Switch3DTransition alloc] init] autorelease];
     
     showingWeb = NO;
+}
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self reloadView];
 }
 
 

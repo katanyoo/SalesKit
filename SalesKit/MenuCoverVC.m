@@ -9,13 +9,16 @@
 #import "MenuCoverVC.h"
 #import "UIConfig.h"
 
-static NSString *ImageKey = @"cover";
-static NSString *pageNameKey = @"pagename";
+#define DOCUMENTSPATH [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
+
+//static NSString *ImageKey = @"cover";
+//static NSString *pageNameKey = @"pagename";
 
 @implementation MenuCoverVC
 
 @synthesize viewList;
 @synthesize menus;
+@synthesize managedObjectContext;
 @synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,10 +47,36 @@ static NSString *pageNameKey = @"pagename";
 
 - (void)readData
 {
+    /*
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Menu" ofType:@"plist"];
     NSDictionary *menuData = [NSDictionary dictionaryWithContentsOfFile:filePath];
     self.menus = [menuData objectForKey:@"menu"];
+    */
     
+    if (self.menus) {
+        [self.menus release];
+        self.menus = nil;
+        self.menus = [NSArray array];
+    }
+    SalesKitAppDelegate *appDelegate = (SalesKitAppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = appDelegate.managedObjectContext;
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"MenuItem" inManagedObjectContext:self.managedObjectContext];
+    [request setEntity:entity];
+    
+    NSError *error;
+    NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    
+    if (mutableFetchResults == nil) {
+        MIPLog(@"Couldn't fetch data");
+    }
+    else if ([mutableFetchResults count] == 0) {
+        MIPLog(@"Have no data");
+    }
+    else {
+        self.menus = [mutableFetchResults mutableCopy];
+    }
 }
 
 
@@ -65,8 +94,10 @@ static NSString *pageNameKey = @"pagename";
     
     if ((NSNull *)cover == [NSNull null])
     {
-        NSString *imageName = [[self.menus objectAtIndex:page] objectForKey:@"cover"];
-        cover = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+        NSString *imageName = ((MenuItem *)[self.menus objectAtIndex:page]).cover;
+        cover = [[UIImageView alloc] initWithImage:
+                 [UIImage imageWithContentsOfFile:
+                  [DOCUMENTSPATH stringByAppendingPathComponent:imageName]]];
         
         [self.viewList replaceObjectAtIndex:page withObject:cover];
         [cover release];
@@ -79,8 +110,9 @@ static NSString *pageNameKey = @"pagename";
         cover.frame = CGRectMake(LANDSCAPE_WIDTH * page, 0, LANDSCAPE_WIDTH, LANDSCAPE_HEIGHT);
         [mainScroll addSubview:cover];
         
-        NSDictionary *item = [self.menus objectAtIndex:page];
-        cover.image = [UIImage imageNamed:[item valueForKey:ImageKey]];
+        NSString *imageName = ((MenuItem *)[self.menus objectAtIndex:page]).cover;
+        cover.image = [UIImage imageWithContentsOfFile:
+                       [DOCUMENTSPATH stringByAppendingPathComponent:imageName]];
     }
 }
 
@@ -121,7 +153,7 @@ static NSString *pageNameKey = @"pagename";
     pageControlUsed = NO;
     
     if ([delegate respondsToSelector:@selector(scrollView:didEndDeceleratingAtPage:andPageName:)]) {
-        [delegate scrollView:(UIScrollView *)self.view didEndDeceleratingAtPage:currentPage andPageName:[[self.menus objectAtIndex:currentPage] objectForKey:pageNameKey]];
+        [delegate scrollView:(UIScrollView *)self.view didEndDeceleratingAtPage:currentPage andPageName:[[self.menus objectAtIndex:currentPage] pageName]];
     }
 }
 
@@ -140,15 +172,8 @@ static NSString *pageNameKey = @"pagename";
 {
 }
 */
-
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
+- (void) reloadView
 {
-    [super viewDidLoad];
-
-    self.view.backgroundColor = [UIColor grayColor];
-    
     [self readData];
     
     NSMutableArray *views = [[NSMutableArray alloc] init];
@@ -169,6 +194,16 @@ static NSString *pageNameKey = @"pagename";
     
     [self loadScrollViewWithPage:0];
     [self loadScrollViewWithPage:1];
+}
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.view.backgroundColor = [UIColor grayColor];
+    
+    [self reloadView];
 }
 
 

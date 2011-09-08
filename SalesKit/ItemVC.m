@@ -8,14 +8,16 @@
 
 #import "ItemVC.h"
 
-static NSString *ImageKey = @"image";
-static NSString *URLKey = @"linkto";
+#define DOCUMENTSPATH [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
+
+//static NSString *ImageKey = @"image";
+//static NSString *URLKey = @"linkto";
 
 @implementation ItemVC
 
 @synthesize delegate;
 
-- (id)initWithItem:(NSDictionary *)item {
+- (id)initWithItem:(SubMenuItem *)item {
     self = [super init];
     if (self) {
         itemData = item;
@@ -49,7 +51,7 @@ static NSString *URLKey = @"linkto";
 
 - (NSString *) URLForWeb
 {
-    return [itemData objectForKey:URLKey];
+    return itemData.linkto;
 }
 
 #pragma mark - View lifecycle
@@ -66,7 +68,9 @@ static NSString *URLKey = @"linkto";
 {
     [super viewDidLoad];
     
-    UIImage *img = [UIImage imageNamed:[itemData objectForKey:ImageKey]];
+    MIPLog(@"%@", itemData.image);
+    UIImage *img = [UIImage imageWithContentsOfFile:
+                    [DOCUMENTSPATH stringByAppendingPathComponent:itemData.image]];
     
     buttonItem = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonItem.frame = CGRectMake(0, 
