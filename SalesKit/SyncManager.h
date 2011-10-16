@@ -10,6 +10,9 @@
 #import "DownloadManager.h"
 #import "ZipArchive.h"
 #import "JSONKit.h"
+#import "DIOSUser.h"
+#import "DIOSNode.h"
+#import "SalesKitAppDelegate.h"
 
 typedef enum {
     MIPSyncStatusFinish,
@@ -30,12 +33,19 @@ typedef enum {
     
     NSString *linkPath;
     NSString *menuPath;
+    
+    SalesKitAppDelegate *appDelegate;
+    
+    DIOSNode *node;
 }
 
 + (SyncManager *) shared;
 - (void)grabURLInBackground:(NSURL *)url;
 - (void)startSyncWithURL:(NSURL *)url;
+- (void)startSync;
 - (void)setStatus:(NSString *)status onState:(MIPSyncStatus)state;
+- (IBAction) loginWithUsername:(NSString *)username password:(NSString *)password;
+- (IBAction) logout;
 //- (void)downloadFinish:(NSString *)destinationPath;
 
 //@property (nonatomic, retain) NSArray *updateList;
@@ -44,6 +54,8 @@ typedef enum {
 @property (nonatomic, retain) NSArray *updateList;
 @property (nonatomic, retain) NSString *linkPath;
 @property (nonatomic, retain) NSString *menuPath;
+
+@property (nonatomic, retain) DIOSNode *node;
 
 @end
 
@@ -55,6 +67,8 @@ typedef enum {
 - (void)syncManagerDidFinishSyncVersionWithItemCount:(NSInteger)count;
 - (void)syncManagerDidFinishUpdateDatabase;
 - (void)syncManagerDidFailUpdateDatabase;
+- (void)syncManagerDidFinishLogin:(NSString *)message;
+- (void)syncManagerDidFinishLogout;
 - (void)updateStatus:(NSString *)status onState:(MIPSyncStatus)state;
 
 @end

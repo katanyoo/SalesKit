@@ -19,12 +19,19 @@
 @interface SettingViewController : UIViewController 
 <SyncManagerDelegate>
 {
-    IBOutlet UILabel *syncingStatus;
+    IBOutlet UILabel *responseStatus;
+    IBOutlet UILabel *syncStatusLabel;
     IBOutlet UIActivityIndicatorView *indicatorView;
-    IBOutlet UITextField *syncURLField;
+    //IBOutlet UITextField *syncURLField;
+    IBOutlet UITextField *usernameField;
+    IBOutlet UITextField *passwordField;
+    
 }
 
 - (IBAction) startSync;
+- (IBAction) login;
+- (IBAction) logout;
+- (void) endSync;
 + (SettingViewController *)shared;
 
 @property (nonatomic, retain) IBOutlet UIProgressView *progressView;

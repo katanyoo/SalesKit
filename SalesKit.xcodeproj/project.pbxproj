@@ -26,6 +26,7 @@
 		5506E398140D523200A61422 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E394140D523200A61422 /* ASIDataCompressor.m */; };
 		5506E39C140E426500A61422 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E39B140E426500A61422 /* JSONKit.m */; };
 		5506E39E140E94C400A61422 /* setting_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5506E39D140E94C400A61422 /* setting_bg.png */; };
+		552E7D6F1418E01300E283D4 /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 552E7D6E1418E01300E283D4 /* close_button.png */; };
 		55449C4C1416B7E5009C2217 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 55449C4B1416B7E5009C2217 /* Default-Landscape~ipad.png */; };
 		55449C5F1416B832009C2217 /* ClothTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C501416B832009C2217 /* ClothTransition.m */; };
 		55449C601416B832009C2217 /* DoorsTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 55449C521416B832009C2217 /* DoorsTransition.m */; };
@@ -55,6 +56,17 @@
 		557D67BF14082A2F0040E6E6 /* SalesKitAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 557D67BE14082A2F0040E6E6 /* SalesKitAppDelegate.m */; };
 		557D67C214082A2F0040E6E6 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557D67C014082A2F0040E6E6 /* MainWindow.xib */; };
 		557D67C514082A2F0040E6E6 /* SalesKit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 557D67C314082A2F0040E6E6 /* SalesKit.xcdatamodeld */; };
+		558EFD16144797B000BD8439 /* DIOSComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD03144797B000BD8439 /* DIOSComment.m */; };
+		558EFD17144797B000BD8439 /* DIOSConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD06144797B000BD8439 /* DIOSConnect.m */; };
+		558EFD18144797B000BD8439 /* DIOSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD08144797B000BD8439 /* DIOSFile.m */; };
+		558EFD19144797B000BD8439 /* DIOSNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD0A144797B000BD8439 /* DIOSNode.m */; };
+		558EFD1A144797B000BD8439 /* DIOSTaxonomy.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD0C144797B000BD8439 /* DIOSTaxonomy.m */; };
+		558EFD1B144797B000BD8439 /* DIOSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD0E144797B000BD8439 /* DIOSUser.m */; };
+		558EFD1C144797B000BD8439 /* DIOSViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD10144797B000BD8439 /* DIOSViews.m */; };
+		558EFD1D144797B000BD8439 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 558EFD11144797B000BD8439 /* LICENSE */; };
+		558EFD1E144797B000BD8439 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD14144797B000BD8439 /* NSData+Base64.m */; };
+		558EFD1F144797B000BD8439 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 558EFD15144797B000BD8439 /* README.md */; };
+		558EFD2314479C3300BD8439 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD2214479C3300BD8439 /* ASIFormDataRequest.m */; };
 		55F97C07140EFB3C000FAA00 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F97BFD140EFB3C000FAA00 /* ioapi.c */; };
 		55F97C08140EFB3C000FAA00 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F97BFF140EFB3C000FAA00 /* mztools.c */; };
 		55F97C09140EFB3C000FAA00 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F97C01140EFB3C000FAA00 /* unzip.c */; };
@@ -99,6 +111,7 @@
 		5506E39A140E426500A61422 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		5506E39B140E426500A61422 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		5506E39D140E94C400A61422 /* setting_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_bg.png; sourceTree = "<group>"; };
+		552E7D6E1418E01300E283D4 /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_button.png; sourceTree = "<group>"; };
 		55449C4B1416B7E5009C2217 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		55449C4F1416B832009C2217 /* ClothTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClothTransition.h; sourceTree = "<group>"; };
 		55449C501416B832009C2217 /* ClothTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClothTransition.m; sourceTree = "<group>"; };
@@ -148,6 +161,27 @@
 		557D67BE14082A2F0040E6E6 /* SalesKitAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SalesKitAppDelegate.m; sourceTree = "<group>"; };
 		557D67C114082A2F0040E6E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		557D67C414082A2F0040E6E6 /* SalesKit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SalesKit.xcdatamodel; sourceTree = "<group>"; };
+		558EFD02144797B000BD8439 /* DIOSComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIOSComment.h; sourceTree = "<group>"; };
+		558EFD03144797B000BD8439 /* DIOSComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIOSComment.m; sourceTree = "<group>"; };
+		558EFD04144797B000BD8439 /* DIOSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIOSConfig.h; sourceTree = "<group>"; };
+		558EFD05144797B000BD8439 /* DIOSConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIOSConnect.h; sourceTree = "<group>"; };
+		558EFD06144797B000BD8439 /* DIOSConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIOSConnect.m; sourceTree = "<group>"; };
+		558EFD07144797B000BD8439 /* DIOSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIOSFile.h; sourceTree = "<group>"; };
+		558EFD08144797B000BD8439 /* DIOSFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIOSFile.m; sourceTree = "<group>"; };
+		558EFD09144797B000BD8439 /* DIOSNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIOSNode.h; sourceTree = "<group>"; };
+		558EFD0A144797B000BD8439 /* DIOSNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIOSNode.m; sourceTree = "<group>"; };
+		558EFD0B144797B000BD8439 /* DIOSTaxonomy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIOSTaxonomy.h; sourceTree = "<group>"; };
+		558EFD0C144797B000BD8439 /* DIOSTaxonomy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIOSTaxonomy.m; sourceTree = "<group>"; };
+		558EFD0D144797B000BD8439 /* DIOSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIOSUser.h; sourceTree = "<group>"; };
+		558EFD0E144797B000BD8439 /* DIOSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIOSUser.m; sourceTree = "<group>"; };
+		558EFD0F144797B000BD8439 /* DIOSViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIOSViews.h; sourceTree = "<group>"; };
+		558EFD10144797B000BD8439 /* DIOSViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIOSViews.m; sourceTree = "<group>"; };
+		558EFD11144797B000BD8439 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		558EFD13144797B000BD8439 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		558EFD14144797B000BD8439 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		558EFD15144797B000BD8439 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		558EFD2114479C3300BD8439 /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
+		558EFD2214479C3300BD8439 /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIFormDataRequest.m; sourceTree = "<group>"; };
 		55F97BFC140EFB3C000FAA00 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		55F97BFD140EFB3C000FAA00 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		55F97BFE140EFB3C000FAA00 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
@@ -227,6 +261,7 @@
 		5506E362140D3D7400A61422 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				552E7D6E1418E01300E283D4 /* close_button.png */,
 				5506E39D140E94C400A61422 /* setting_bg.png */,
 			);
 			name = UI;
@@ -245,6 +280,8 @@
 			isa = PBXGroup;
 			children = (
 				5506E388140D51D900A61422 /* ASICacheDelegate.h */,
+				558EFD2114479C3300BD8439 /* ASIFormDataRequest.h */,
+				558EFD2214479C3300BD8439 /* ASIFormDataRequest.m */,
 				5506E376140D4A0D00A61422 /* ASIHTTPRequest.h */,
 				5506E377140D4A0D00A61422 /* ASIHTTPRequest.m */,
 				5506E378140D4A0D00A61422 /* ASINetworkQueue.h */,
@@ -385,6 +422,7 @@
 		557D67B414082A2F0040E6E6 /* SalesKit */ = {
 			isa = PBXGroup;
 			children = (
+				558EFD01144797AF00BD8439 /* Drupal-Connect */,
 				55449C4E1416B832009C2217 /* HMGLTransitions */,
 				5506E374140D480200A61422 /* NetworkManager */,
 				5506E356140D2D3200A61422 /* Settings Control */,
@@ -416,6 +454,40 @@
 				557D67BB14082A2F0040E6E6 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		558EFD01144797AF00BD8439 /* Drupal-Connect */ = {
+			isa = PBXGroup;
+			children = (
+				558EFD02144797B000BD8439 /* DIOSComment.h */,
+				558EFD03144797B000BD8439 /* DIOSComment.m */,
+				558EFD04144797B000BD8439 /* DIOSConfig.h */,
+				558EFD05144797B000BD8439 /* DIOSConnect.h */,
+				558EFD06144797B000BD8439 /* DIOSConnect.m */,
+				558EFD07144797B000BD8439 /* DIOSFile.h */,
+				558EFD08144797B000BD8439 /* DIOSFile.m */,
+				558EFD09144797B000BD8439 /* DIOSNode.h */,
+				558EFD0A144797B000BD8439 /* DIOSNode.m */,
+				558EFD0B144797B000BD8439 /* DIOSTaxonomy.h */,
+				558EFD0C144797B000BD8439 /* DIOSTaxonomy.m */,
+				558EFD0D144797B000BD8439 /* DIOSUser.h */,
+				558EFD0E144797B000BD8439 /* DIOSUser.m */,
+				558EFD0F144797B000BD8439 /* DIOSViews.h */,
+				558EFD10144797B000BD8439 /* DIOSViews.m */,
+				558EFD11144797B000BD8439 /* LICENSE */,
+				558EFD12144797B000BD8439 /* NSData_Base64 */,
+				558EFD15144797B000BD8439 /* README.md */,
+			);
+			path = "Drupal-Connect";
+			sourceTree = "<group>";
+		};
+		558EFD12144797B000BD8439 /* NSData_Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				558EFD13144797B000BD8439 /* NSData+Base64.h */,
+				558EFD14144797B000BD8439 /* NSData+Base64.m */,
+			);
+			path = NSData_Base64;
 			sourceTree = "<group>";
 		};
 		55F97BFA140EFB3C000FAA00 /* ZipArchive */ = {
@@ -498,6 +570,9 @@
 				55449C4C1416B7E5009C2217 /* Default-Landscape~ipad.png in Resources */,
 				55449C6B1416B897009C2217 /* MainViewController.xib in Resources */,
 				55449C7F1416B95A009C2217 /* ItemBarVC.xib in Resources */,
+				552E7D6F1418E01300E283D4 /* close_button.png in Resources */,
+				558EFD1D144797B000BD8439 /* LICENSE in Resources */,
+				558EFD1F144797B000BD8439 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +619,15 @@
 				55449C7E1416B95A009C2217 /* ItemBarVC.m in Sources */,
 				55449C801416B95A009C2217 /* ItemVC.m in Sources */,
 				55449C901416E9CB009C2217 /* BigView.m in Sources */,
+				558EFD16144797B000BD8439 /* DIOSComment.m in Sources */,
+				558EFD17144797B000BD8439 /* DIOSConnect.m in Sources */,
+				558EFD18144797B000BD8439 /* DIOSFile.m in Sources */,
+				558EFD19144797B000BD8439 /* DIOSNode.m in Sources */,
+				558EFD1A144797B000BD8439 /* DIOSTaxonomy.m in Sources */,
+				558EFD1B144797B000BD8439 /* DIOSUser.m in Sources */,
+				558EFD1C144797B000BD8439 /* DIOSViews.m in Sources */,
+				558EFD1E144797B000BD8439 /* NSData+Base64.m in Sources */,
+				558EFD2314479C3300BD8439 /* ASIFormDataRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

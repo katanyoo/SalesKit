@@ -114,12 +114,13 @@
                                   self.view.bounds.size.width,
                                   self.view.bounds.size.height);
         itemBar.view.frame = frame;
-        //itemBar.view.backgroundColor = [UIColor clearColor];
-        itemBar.view.backgroundColor = [UIColor colorWithRed:0.1 * page
+        itemBar.view.backgroundColor = [UIColor clearColor];
+        /*
+        itemBar.view.backgroundColor = [UIColor colorWithRed:0.9 * page
                                                        green:0.5
                                                         blue:0.2
                                                        alpha:1.0];
-        
+        */
         NSArray *items = [[((MenuItem *)[self.menus objectAtIndex:page]) subMenuItems] allObjects];
         MIPLog(@"item count = %i", [items count]);
         [itemBar setupBarWithItems:items];

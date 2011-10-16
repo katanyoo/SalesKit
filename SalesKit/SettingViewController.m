@@ -37,12 +37,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void) endSync
-{
-    if ([delegate respondsToSelector:@selector(needSync:)]) {
-        [delegate needSync:NO];
-    }
-}
 
 #pragma mark - SyncManager Delegate
 
@@ -85,21 +79,40 @@
 
 - (void)syncManagerDidFinishSyncVersionWithJSONString:(NSString *)responseString
 {
+    
+}
 
+- (void) syncManagerDidFinishLogin:(NSString *)message
+{
+    //MIPLog(@"login success");
+    responseStatus.text = message;
+    
+    if ([delegate respondsToSelector:@selector(needSync:)]) {
+        [delegate needSync:YES];
+    }
+}
+
+- (void) syncManagerDidFinishLogout
+{
+    responseStatus.text = @"Logout Success";
+    
+    if ([delegate respondsToSelector:@selector(needSync:)]) {
+        [delegate needSync:YES];
+    }
 }
 
 - (void) updateStatus:(NSString *)status onState:(MIPSyncStatus)state
 {
-    syncingStatus.text = status;
+    responseStatus.text = status;
     
     if (state == MIPSyncStatusError) {
-        syncingStatus.textColor = [UIColor redColor];
+        responseStatus.textColor = [UIColor redColor];
     }
     else if (state == MIPSyncStatusNormal) {
-        syncingStatus.textColor = [UIColor lightGrayColor];
+        responseStatus.textColor = [UIColor lightGrayColor];
     }
     else if (state == MIPSyncStatusFinish) {
-        syncingStatus.textColor = [UIColor greenColor];
+        responseStatus.textColor = [UIColor greenColor];
     }
     
     if (state == MIPSyncStatusFinish || state == MIPSyncStatusError) {
@@ -115,12 +128,32 @@
 
 - (NSURL *) urlForSync
 {
-    return [NSURL URLWithString:syncURLField.text];
+//    return [NSURL URLWithString:syncURLField.text];
+    return nil;
+}
+
+- (IBAction) login
+{
+    [[SyncManager shared] loginWithUsername:usernameField.text password:passwordField.text];
+}
+
+- (IBAction) logout
+{
+    [[SyncManager shared] logout];
 }
 
 - (IBAction) startSync
 {
-    [[SyncManager shared] startSyncWithURL:[self urlForSync]];// grabURLInBackground:[self urlForSync]];
+    //[[SyncManager shared] startSyncWithURL:[self urlForSync]];// grabURLInBackground:[self urlForSync]];
+    [[SyncManager shared] startSync];
+    
+}
+
+- (void) endSync
+{
+    if ([delegate respondsToSelector:@selector(needSync:)]) {
+        [delegate needSync:NO];
+    }
 }
 
 #pragma mark - Shared Method
@@ -153,8 +186,8 @@ static SettingViewController *shared = nil;
     //[self.view viewWithTag:MAINVIEW_TAG].frame = CGRectMake(0, 0, 1024, 768);
     
     [SyncManager shared].delegate = self;
-    [self startSync];
-    
+    //[self startSync];
+    [self login];
 }
 
 - (void)viewDidUnload

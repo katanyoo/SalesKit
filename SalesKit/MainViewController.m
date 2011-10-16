@@ -247,16 +247,6 @@
 
 - (void)reloadView
 {
-    SettingViewController *settingVC = [SettingViewController shared];
-    settingVC.delegate = self;
-    [bigView addSubview:settingVC.view];
-    
-    mainScrollVC.delegate = self;
-    mainScrollVC.view.tag = MAINSCROLL_TAG;
-    [mainScrollVC reloadView];
-    [bigView addSubview:mainScrollVC.view];
-    
-    
     //pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(-125, WEBVIEW_HEIGHT - PAGECONTROL_HEIGHT, PAGECONTROL_WIDTH, PAGECONTROL_HEIGHT)];
     
     //pageControl.center = self.view.center;
@@ -316,6 +306,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    SettingViewController *settingVC = [SettingViewController shared];
+    settingVC.delegate = self;
+    [bigView addSubview:settingVC.view];
+    
+    mainScrollVC.delegate = self;
+    mainScrollVC.view.tag = MAINSCROLL_TAG;
+    [mainScrollVC reloadView];
+    
+    CGRect rect = mainScrollVC.view.frame;
+    rect.origin = CGPointMake(0, 200);
+    mainScrollVC.view.frame = rect;
+    
+    [bigView addSubview:mainScrollVC.view];
+    
     [self reloadView];
 }
 

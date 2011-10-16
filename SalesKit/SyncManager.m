@@ -22,6 +22,15 @@
 @synthesize updateList;
 @synthesize linkPath;
 @synthesize menuPath;
+@synthesize node;
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        appDelegate = (SalesKitAppDelegate *)[[UIApplication sharedApplication] delegate];
+    }
+    return self;
+}
 
 #pragma mark - Shared Method
 
@@ -105,6 +114,71 @@ static SyncManager *shared = nil;
     [self setStatus:[error localizedDescription] onState:MIPSyncStatusError];
 }
 
+#pragma mark - DIOS Methods
+- (void) displayDebugDIOS:(id)aDIOSConnect {
+    //responseStatus.text = [aDIOSConnect responseStatusMessage];
+    NSString *response = [aDIOSConnect responseStatusMessage];
+    if([aDIOSConnect connResult] == nil) {
+        if([aDIOSConnect respondsToSelector:@selector(error)]) {
+            //responseStatus.text = [NSString stringWithFormat:@"%@", [aDIOSConnect error]]; 
+            //MIPLog(@"%@", [aDIOSConnect error]);
+            //MIPLog(@"%@", aDIOSConnect);
+            NSArray *respTrimed = [response componentsSeparatedByString:@": "];
+            if ([respTrimed count] > 0) {
+                NSMutableArray *resp = [NSMutableArray arrayWithArray:[[respTrimed lastObject] componentsSeparatedByString:@" "]];
+                [resp removeLastObject];
+                NSString *respCon = [resp componentsJoinedByString:@" "];
+                if ([respCon isEqualToString:@"Already logged in as"]) {
+                    if ([delegate respondsToSelector:@selector(syncManagerDidFinishLogin:)]) {
+                        [delegate syncManagerDidFinishLogin:[respTrimed lastObject]];
+                    }
+                }
+            }
+        }
+    } else {
+        //[self dismissModalViewControllerAnimated:YES];
+        if ([[[response componentsSeparatedByString:@" "] lastObject] isEqualToString:@"OK"]){
+            if ([aDIOSConnect userInfo]) {
+                MIPLog(@"++++ Login OK ++++");
+                if ([delegate respondsToSelector:@selector(syncManagerDidFinishLogin:)]) {
+                    [delegate syncManagerDidFinishLogin:@"Login Success"];
+                }
+            }
+            else {
+                MIPLog(@"---- Logout OK ----");
+                if ([delegate respondsToSelector:@selector(syncManagerDidFinishLogout)]) {
+                    [delegate syncManagerDidFinishLogout];
+                }
+            }
+        }
+        else {
+        }
+    }
+}
+
+-(IBAction) loginWithUsername:(NSString *)username password:(NSString *)password {
+    DIOSUser *user = [[DIOSUser alloc] initWithSession:appDelegate.session];
+    [user loginWithUsername:username andPassword:password];
+    //Since we logged in our main session needs to know the new user information
+    if ([[[[user connResult] objectForKey:@"#data"] objectForKey:@"user"] objectForKey:@"uid"]) {
+        [appDelegate setSession:user];
+    }
+    [self displayDebugDIOS:user];
+    [user release];
+}
+
+-(IBAction) logout {
+    DIOSUser *user = [[DIOSUser alloc] initWithSession:[appDelegate session]];
+    [user logout];
+    MIPLog(@"%@", user);
+    if ([user connResult]) {
+        [appDelegate setSession:user];
+    }
+    [self displayDebugDIOS:user];
+    [user release];
+}
+
+
 #pragma mark - Download Manager Delegate
 
 - (void)downloadManager:(DownloadManager *)downloadManager didFinishDownloadWithPath:(NSString *)destinationPath {
@@ -123,6 +197,24 @@ static SyncManager *shared = nil;
 }
 
 #pragma  mark -
+
+- (void)startSync
+{
+    NSLog(@"reloadData");
+    if (self.node) {
+        //[self.node release];
+        self.node = nil;
+    }
+    self.node = [[DIOSNode alloc] initWithSession:appDelegate.session];
+    //NSArray *connResult = [(NSArray *)[node nodeGetWithCurrentUser] copy];
+    NSArray *connResult = [(NSArray *)[node nodeGet:@"19"] copy];
+    NSLog(@"%@", connResult);
+    
+    
+    
+    [connResult release];
+    [self.node release];
+}
 
 - (void)startSyncWithURL:(NSURL *)url
 {

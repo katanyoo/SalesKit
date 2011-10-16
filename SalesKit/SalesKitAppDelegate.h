@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DIOSConnect.h"
 
 @interface SalesKitAppDelegate : NSObject <UIApplicationDelegate> {
 
+    DIOSConnect *session;
 }
 
+@property (nonatomic, retain) DIOSConnect *session;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;

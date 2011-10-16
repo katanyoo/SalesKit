@@ -21,3 +21,5 @@
 #define WEBVIEW_TAG 222
 
 #define MAINVIEW_TAG 123
+
+#define BASE_FILES_URL @"http://saleskit.myiphone.in.th/sites/default/files"

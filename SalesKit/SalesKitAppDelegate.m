@@ -14,7 +14,7 @@
 
 @implementation SalesKitAppDelegate
 
-
+@synthesize session;
 @synthesize window=_window;
 
 @synthesize managedObjectContext=__managedObjectContext;
@@ -38,7 +38,7 @@
     self.window.rootViewController = mainVC;
     //mainVC.view.bounds = settingVC.view.bounds;
     //mainVC.view.tag = MAINVIEW_TAG;
-    
+    self.session = [[DIOSConnect alloc] init];
     /*
     CGAffineTransform rotate = CGAffineTransformMakeRotation(M_PI/2.0);
     [mainVC.view setTransform:rotate];
