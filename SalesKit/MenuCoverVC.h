@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SalesKitAppDelegate.h"
-#import "MenuItem.h"
+#import "Category.h"
 
 @protocol MenuCoverVCDelegate <NSObject>
 

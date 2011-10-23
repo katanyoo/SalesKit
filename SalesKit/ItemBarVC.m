@@ -57,7 +57,7 @@
     self.items = buttonItems;
     
     int orginX = 0;
-    for (SubMenuItem *item in self.items) {
+    for (SubCategory *item in self.items) {
         ItemVC *itemVC = [[ItemVC alloc] initWithItem:item];
         itemVC.delegate = self;
         

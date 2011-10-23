@@ -56,14 +56,12 @@
    return [self connResult];
 }
 
--(NSDictionary *) nodeGetWithCurrentUser {
+-(NSDictionary *) nodeGetWithType:(NSString *)type pageSize:(NSInteger)pz page:(NSInteger)p {
     
+    NSString *url = [@"node?" stringByAppendingFormat:@"parameters[type]=%@&pagesize=%i&page=%i", type, pz, p];
     [self setMethod:@"node.get"];
     [self setRequestMethod:@"GET"];
-    [self setMethodUrl:@"node"];
-    
-    //[self addParam:self.userInfo forKey:@"user"];
-    NSLog(@"user id  = %@", [self.userInfo objectForKey:@"uid"]);
+    [self setMethodUrl:url];
     
     [self runMethod];
     return [self connResult];

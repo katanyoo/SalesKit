@@ -45,5 +45,5 @@
 -(NSDictionary *) nodeSave:(NSMutableDictionary *)node;
 -(NSDictionary *) nodeDelete:(NSString *)nid;
 -(NSDictionary *) nodeGetIndex;
--(NSDictionary *) nodeGetWithCurrentUser;
+-(NSDictionary *) nodeGetWithType:(NSString *)type pageSize:(NSInteger)pz page:(NSInteger)p;
 @end

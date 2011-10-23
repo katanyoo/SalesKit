@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SalesKitAppDelegate.h"
 #import "ItemBarVC.h"
-#import "MenuItem.h"
-#import "SubMenuItem.h"
+#import "Category.h"
+#import "SubCategory.h"
 
 @protocol MenuBarVCDelegate <NSObject>
 

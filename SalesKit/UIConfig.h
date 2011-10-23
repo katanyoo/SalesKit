@@ -22,4 +22,4 @@
 
 #define MAINVIEW_TAG 123
 
-#define BASE_FILES_URL @"http://saleskit.myiphone.in.th/sites/default/files"
+#define BASE_FILES_URL @"http://saleskit.myiphone.in.th/sites/default/files/"

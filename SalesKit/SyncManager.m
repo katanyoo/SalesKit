@@ -9,8 +9,11 @@
 #import "SyncManager.h"
 #import "ASIHTTPRequest.h"
 
-#import "MenuItem.h"
-#import "SubMenuItem.h"
+#import "Category.h"
+#import "SubCategory.h"
+#import "UIConfig.h"
+
+#import "DownloadItem.h"
 
 #define DOCUMENTSPATH [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
 
@@ -28,6 +31,8 @@
     self = [super init];
     if (self) {
         appDelegate = (SalesKitAppDelegate *)[[UIApplication sharedApplication] delegate];
+        operationQue = [[NSOperationQueue alloc] init];
+        self.node = [[DIOSNode alloc] initWithSession:appDelegate.session];
     }
     return self;
 }
@@ -198,28 +203,215 @@ static SyncManager *shared = nil;
 
 #pragma  mark -
 
+- (NSDictionary *)getNodeDetail:(NSNumber *)nid
+{
+    DIOSNode *nn = [[DIOSNode alloc] initWithSession:appDelegate.session];
+    
+    NSString *nodeID = [NSString stringWithFormat:@"%@", nid];
+    NSDictionary *nodeData = [[nn nodeGet:nodeID] copy];
+    [nn release];
+    
+    return nodeData;
+}
+
+- (void) addCategoryNode:(NSDictionary *)successNode
+{
+    Category *newNode = (Category *)[NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:appDelegate.managedObjectContext];
+    
+    newNode.nodeID = [successNode objectForKey:@"nid"];
+    newNode.updateDate = [successNode objectForKey:@"changed"];
+    newNode.pageName = [successNode objectForKey:@"title"];
+    newNode.cover = [successNode objectForKey:@"cover"];
+    newNode.weight = [successNode objectForKey:@"weight"];
+    
+    NSError *error;
+    if (![appDelegate.managedObjectContext save:&error]) {
+        MIPLog(@"Add new node FAIL : %@", [error localizedDescription]);
+    }
+    else {
+        MIPLog(@"Add new node SUCCESS");
+    }
+}
+
+- (void) downloadManager:(DownloadManager *)downloadManager didFinishDownloadWithRequest:(ASIHTTPRequest *)request forObject:(id)obj
+{
+    DownloadItem *dlitem = obj;
+    
+    if ([[[[request downloadDestinationPath] lastPathComponent] pathExtension] isEqualToString:@"zip"]) {
+        // unzip;
+    }
+    else {
+    
+    }
+    
+    if (dlitem.done) {
+        if (!dlitem.linkto) {
+            NSMutableDictionary *successNode = [[NSMutableDictionary alloc] init];
+            [successNode setObject:dlitem.nodeID forKey:@"nid"];
+            [successNode setObject:dlitem.updateDate forKey:@"changed"];
+            [successNode setObject:dlitem.pageName forKey:@"title"];
+            [successNode setObject:[request downloadDestinationPath] forKey:@"cover"];
+            [successNode setObject:dlitem.weight forKey:@"weight"];
+        }
+    }
+}
+
+- (void) downloadManager:(DownloadManager *)downloadManager didFailDownloadWithRequest:(ASIHTTPRequest *)request
+{
+    
+}
+
+- (void)addNewNode:(NSNumber *)nid
+{
+    NSDictionary *nodeDetail = [self getNodeDetail:nid];
+    NSString *nodeType = [nodeDetail objectForKey:@"type"];
+    
+    if ([nodeType isEqualToString:@"category"]) {
+        
+        MIPLog(@"%@", nodeDetail);
+        
+        NSString *imageName = [[[[nodeDetail objectForKey:@"field_image"] 
+                                 objectForKey:@"und"] 
+                                objectAtIndex:0]
+                               objectForKey:@"filename"];
+        NSString *imagePath = [BASE_FILES_URL stringByAppendingPathComponent:imageName];
+        
+        DownloadItem *catNode = [[DownloadItem alloc] init];
+        catNode.nodeID = [nodeDetail objectForKey:@"nid"];
+        catNode.updateDate = [nodeDetail objectForKey:@"changed"];
+        catNode.pageName = [nodeDetail objectForKey:@"title"];
+        catNode.imagePath = imagePath;
+        catNode.weight = [[[[nodeDetail objectForKey:@"field_weight"] objectForKey:@"und"] objectAtIndex:0] objectForKey:@"value"];
+        catNode.linkto = nil;
+        catNode.done = NO;
+        
+        NSArray *downloadList = [NSArray arrayWithObject:catNode];
+        
+        downloadItemCount = [downloadList count];
+        
+        DownloadManager *dl = [[DownloadManager alloc] init];
+        dl.delegate = self;
+        [dl startDownloadWithItem:catNode];
+        
+        /*
+
+        }*/
+    }
+    else if ([nodeType isEqualToString:@"sub_category"]) {
+        MIPLog(@"%@", nodeDetail);
+    }
+    
+}
+
+- (void)updateNode:(NSNumber *)nid
+{
+    
+}
+
+- (void)startOperation:(NSDictionary *)metaNode
+{
+    NSNumber *lastUpdate = [appDelegate lastUpdateForNodeID:[metaNode objectForKey:@"nid"]];
+    if (lastUpdate == nil) {
+        MIPLog(@"Add new node %@", [metaNode objectForKey:@"nid"]);
+        
+        NSInvocationOperation *addNode = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(addNewNode:) object:[metaNode objectForKey:@"nid"]];
+        
+        [operationQue addOperation:addNode];
+        [addNode release];
+    }
+    else if ([[metaNode objectForKey:@"changed"] intValue] - [lastUpdate intValue] > 0) {
+        MIPLog(@"have update %i", [[metaNode objectForKey:@"changed"] intValue] - [lastUpdate intValue] > 0);
+        
+        NSInvocationOperation *updatingNode = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(updateNode:) object:[metaNode objectForKey:@"nid"]];
+        
+        [operationQue addOperation:updatingNode];
+        [updatingNode release];
+    }
+    else if (YES) {
+        // check for remove node
+        MIPLog(@"No update");
+    }
+}
+
+- (void)startOperationWithList:(NSArray *)nodeList atIndex:(NSInteger)ind
+{
+    //NSNumber *nodeID = [[nodeList objectAtIndex:ind] objectForKey:@"nid"];
+    //NSDictionary *nodeDetail = [self getNodeDetail:nodeID];
+    if ([nodeList count] > ind) {
+        [self startOperation:[nodeList objectAtIndex:ind]];
+    }
+}
+
+- (void)getLastestVersionNodes {
+    
+    
+    DIOSNode *nn = [[DIOSNode alloc] initWithSession:appDelegate.session];
+    
+    NSMutableArray *connResult = [[NSMutableArray alloc] init];
+    
+    int i=0;
+    NSArray *tmp;
+    
+    do {
+        if (tmp) {
+            tmp = nil;
+        }
+        
+        tmp = (NSArray *)[nn nodeGetWithType:@"sub_category" pageSize:30 page:i];
+        if ([tmp count] > 0) {
+            [connResult addObjectsFromArray:tmp];
+            ++i;
+        }
+    } while ([tmp count] > 0);
+    
+    i=0;
+    do {
+        if (tmp) {
+            tmp = nil;
+        }
+        
+        tmp = (NSArray *)[nn nodeGetWithType:@"category" pageSize:30 page:i];
+        if ([tmp count] > 0) {
+            [connResult addObjectsFromArray:tmp];
+            ++i;
+        }
+    } while ([tmp count] > 0);
+    
+    //NSArray *connResult = [(NSArray *)[node nodeGet:@"19"] copy];
+    //NSLog(@"%@", connResult);
+    
+    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == 'category' || type == 'sub_category'"];
+    //NSArray *filterResult = [connResult filteredArrayUsingPredicate:predicate];
+    
+    //checkList = [[NSMutableArray alloc] init];
+    //MIPLog(@"---- %@ ----", [nn nodeGetWithCurrentUser]);
+    //for (NSDictionary *nodeDetail in connResult) {
+        //[checkList addObject:[nodeDetail objectForKey:@"nid"]];
+    [self startOperationWithList:connResult atIndex:0];
+        //MIPLog(@"%@", nodeDetail);
+    //}
+
+    [connResult release];
+    //[self.node release];
+    [nn release];
+}
+
 - (void)startSync
 {
-    NSLog(@"reloadData");
-    if (self.node) {
-        //[self.node release];
-        self.node = nil;
-    }
-    self.node = [[DIOSNode alloc] initWithSession:appDelegate.session];
-    //NSArray *connResult = [(NSArray *)[node nodeGetWithCurrentUser] copy];
-    NSArray *connResult = [(NSArray *)[node nodeGet:@"19"] copy];
-    NSLog(@"%@", connResult);
+    MIPLog(@"reloadData");
+
+    NSInvocationOperation *checkForUpdate = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(getLastestVersionNodes) object:nil];
     
-    
-    
-    [connResult release];
-    [self.node release];
+    [operationQue addOperation:checkForUpdate];
+    [checkForUpdate release];
 }
 
 - (void)startSyncWithURL:(NSURL *)url
 {
     [self grabURLInBackground:url];
 }
+
+
 
 - (void) setStatus:(NSString *)status onState:(MIPSyncStatus)state
 {
@@ -228,10 +420,10 @@ static SyncManager *shared = nil;
     }
 }
 
-- (MenuItem *) menuID:(NSString *)menuid
+- (Category *) menuID:(NSString *)menuid
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"MenuItem" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:self.managedObjectContext];
     [request setEntity:entity];
     
     NSError *error;
@@ -259,20 +451,20 @@ static SyncManager *shared = nil;
     return nil;
 }
 
-- (BOOL) addMenuItem:(NSDictionary *)menuItem
+- (BOOL) addCategory:(NSDictionary *)categoryItem
 {
-    MenuItem *mItem = [self menuID:[menuItem objectForKey:@"id"]];
+    Category *mItem = [self menuID:[categoryItem objectForKey:@"id"]];
     if (!mItem) {
-        mItem = (MenuItem *)[NSEntityDescription insertNewObjectForEntityForName:@"MenuItem" inManagedObjectContext:self.managedObjectContext];
-        mItem.menuid = [menuItem objectForKey:@"id"];
+        mItem = (Category *)[NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:self.managedObjectContext];
+        mItem.nodeID = [categoryItem objectForKey:@"id"];
         mItem.cover = [self.menuPath stringByAppendingPathComponent:
-                       [menuItem objectForKey:@"cover"]];
-        mItem.pageName = [menuItem objectForKey:@"name"];
+                       [categoryItem objectForKey:@"cover"]];
+        mItem.pageName = [categoryItem objectForKey:@"name"];
     }
 
     NSMutableSet *itemSet = [NSMutableSet set];
-    for (NSDictionary *subItem in [menuItem objectForKey:@"items"]) {
-        SubMenuItem *sItem = (SubMenuItem *)[NSEntityDescription insertNewObjectForEntityForName:@"SubMenuItem" inManagedObjectContext:self.managedObjectContext];
+    for (NSDictionary *subItem in [categoryItem objectForKey:@"items"]) {
+        SubCategory *sItem = (SubCategory *)[NSEntityDescription insertNewObjectForEntityForName:@"SubCategory" inManagedObjectContext:self.managedObjectContext];
         sItem.image = [self.menuPath stringByAppendingPathComponent:
                        [subItem objectForKey:@"image"]];
         sItem.linkto = [self.linkPath stringByAppendingPathComponent:
@@ -280,7 +472,7 @@ static SyncManager *shared = nil;
         [itemSet addObject:sItem];
     }
     
-    mItem.subMenuItems = itemSet;
+    mItem.subCategoryItems = itemSet;
     
     NSError *error;
     if(![self.managedObjectContext save:&error]) {
@@ -314,16 +506,16 @@ static SyncManager *shared = nil;
         
         NSArray *menuData = [dataForUpdate objectForKey:@"data"];
         
-        for (NSDictionary *menuItem in menuData) {
-            if ([[menuItem objectForKey:@"action"] isEqualToString:@"add"]) {
-                if ([self addMenuItem:menuItem] && success) {
+        for (NSDictionary *Category in menuData) {
+            if ([[Category objectForKey:@"action"] isEqualToString:@"add"]) {
+                if ([self addCategory:Category] && success) {
                     success = YES;
                 }
                 else {
                     success = NO;
                 }
             }
-            else if ([[menuItem objectForKey:@"action"] isEqualToString:@"remove"]){
+            else if ([[Category objectForKey:@"action"] isEqualToString:@"remove"]){
                 
             }
         }

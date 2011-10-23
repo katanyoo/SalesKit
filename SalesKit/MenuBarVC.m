@@ -58,7 +58,7 @@
     self.managedObjectContext = appDelegate.managedObjectContext;
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"MenuItem" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:self.managedObjectContext];
     [request setEntity:entity];
     
     NSError *error;
@@ -121,7 +121,7 @@
                                                         blue:0.2
                                                        alpha:1.0];
         */
-        NSArray *items = [[((MenuItem *)[self.menus objectAtIndex:page]) subMenuItems] allObjects];
+        NSArray *items = [[((Category *)[self.menus objectAtIndex:page]) subCategoryItems] allObjects];
         MIPLog(@"item count = %i", [items count]);
         [itemBar setupBarWithItems:items];
         

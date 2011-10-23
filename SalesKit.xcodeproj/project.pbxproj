@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5506E346140CC6BD00A61422 /* DownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E345140CC6BD00A61422 /* DownloadManager.m */; };
-		5506E352140CCE2600A61422 /* MenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E351140CCE2600A61422 /* MenuItem.m */; };
-		5506E355140CCE2700A61422 /* SubMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E354140CCE2700A61422 /* SubMenuItem.m */; };
 		5506E35A140D2D7000A61422 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E358140D2D7000A61422 /* SettingViewController.m */; };
 		5506E35B140D2D7000A61422 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5506E359140D2D7000A61422 /* SettingViewController.xib */; };
 		5506E367140D44DB00A61422 /* SyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E366140D44DB00A61422 /* SyncManager.m */; };
@@ -67,6 +65,9 @@
 		558EFD1E144797B000BD8439 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD14144797B000BD8439 /* NSData+Base64.m */; };
 		558EFD1F144797B000BD8439 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 558EFD15144797B000BD8439 /* README.md */; };
 		558EFD2314479C3300BD8439 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 558EFD2214479C3300BD8439 /* ASIFormDataRequest.m */; };
+		559B65C71454799600769EE3 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 559B65C61454799500769EE3 /* Category.m */; };
+		559B65CA1454799600769EE3 /* SubCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 559B65C91454799600769EE3 /* SubCategory.m */; };
+		55A7F0F31454C78F009DD5F7 /* DownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A7F0F21454C78F009DD5F7 /* DownloadItem.m */; };
 		55F97C07140EFB3C000FAA00 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F97BFD140EFB3C000FAA00 /* ioapi.c */; };
 		55F97C08140EFB3C000FAA00 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F97BFF140EFB3C000FAA00 /* mztools.c */; };
 		55F97C09140EFB3C000FAA00 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F97C01140EFB3C000FAA00 /* unzip.c */; };
@@ -77,10 +78,6 @@
 /* Begin PBXFileReference section */
 		5506E344140CC6BD00A61422 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
 		5506E345140CC6BD00A61422 /* DownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadManager.m; sourceTree = "<group>"; };
-		5506E350140CCE2600A61422 /* MenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuItem.h; path = ../MenuItem.h; sourceTree = "<group>"; };
-		5506E351140CCE2600A61422 /* MenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuItem.m; path = ../MenuItem.m; sourceTree = "<group>"; };
-		5506E353140CCE2700A61422 /* SubMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubMenuItem.h; path = ../SubMenuItem.h; sourceTree = "<group>"; };
-		5506E354140CCE2700A61422 /* SubMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubMenuItem.m; path = ../SubMenuItem.m; sourceTree = "<group>"; };
 		5506E357140D2D7000A61422 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		5506E358140D2D7000A61422 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		5506E359140D2D7000A61422 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
@@ -182,6 +179,12 @@
 		558EFD15144797B000BD8439 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		558EFD2114479C3300BD8439 /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
 		558EFD2214479C3300BD8439 /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIFormDataRequest.m; sourceTree = "<group>"; };
+		559B65C51454799500769EE3 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		559B65C61454799500769EE3 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		559B65C81454799600769EE3 /* SubCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCategory.h; sourceTree = "<group>"; };
+		559B65C91454799600769EE3 /* SubCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCategory.m; sourceTree = "<group>"; };
+		55A7F0F11454C78F009DD5F7 /* DownloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadItem.h; path = "../../../../../../../Users/katanyoo/Documents/iPhone Programming/Mockup/SalesKit/SalesKit/DownloadItem.h"; sourceTree = "<group>"; };
+		55A7F0F21454C78F009DD5F7 /* DownloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadItem.m; path = "../../../../../../../Users/katanyoo/Documents/iPhone Programming/Mockup/SalesKit/SalesKit/DownloadItem.m"; sourceTree = "<group>"; };
 		55F97BFC140EFB3C000FAA00 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		55F97BFD140EFB3C000FAA00 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		55F97BFE140EFB3C000FAA00 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
@@ -221,23 +224,14 @@
 			children = (
 				55F97BFA140EFB3C000FAA00 /* ZipArchive */,
 				5506E399140E425000A61422 /* JSONKit */,
+				55A7F0F11454C78F009DD5F7 /* DownloadItem.h */,
+				55A7F0F21454C78F009DD5F7 /* DownloadItem.m */,
 				5506E344140CC6BD00A61422 /* DownloadManager.h */,
 				5506E345140CC6BD00A61422 /* DownloadManager.m */,
 				5506E365140D44DB00A61422 /* SyncManager.h */,
 				5506E366140D44DB00A61422 /* SyncManager.m */,
 			);
 			name = Sync;
-			sourceTree = "<group>";
-		};
-		5506E34F140CCDFB00A61422 /* ModelObjects */ = {
-			isa = PBXGroup;
-			children = (
-				5506E353140CCE2700A61422 /* SubMenuItem.h */,
-				5506E354140CCE2700A61422 /* SubMenuItem.m */,
-				5506E350140CCE2600A61422 /* MenuItem.h */,
-				5506E351140CCE2600A61422 /* MenuItem.m */,
-			);
-			name = ModelObjects;
 			sourceTree = "<group>";
 		};
 		5506E356140D2D3200A61422 /* Settings Control */ = {
@@ -422,11 +416,11 @@
 		557D67B414082A2F0040E6E6 /* SalesKit */ = {
 			isa = PBXGroup;
 			children = (
+				5582E7291450CDF400097D18 /* DataModel */,
 				558EFD01144797AF00BD8439 /* Drupal-Connect */,
 				55449C4E1416B832009C2217 /* HMGLTransitions */,
 				5506E374140D480200A61422 /* NetworkManager */,
 				5506E356140D2D3200A61422 /* Settings Control */,
-				5506E34F140CCDFB00A61422 /* ModelObjects */,
 				5506E33D140CC66600A61422 /* Sync */,
 				55449C6C1416B8D0009C2217 /* WebView */,
 				55449C6F1416B914009C2217 /* Config */,
@@ -454,6 +448,17 @@
 				557D67BB14082A2F0040E6E6 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5582E7291450CDF400097D18 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				559B65C81454799600769EE3 /* SubCategory.h */,
+				559B65C91454799600769EE3 /* SubCategory.m */,
+				559B65C51454799500769EE3 /* Category.h */,
+				559B65C61454799500769EE3 /* Category.m */,
+			);
+			name = DataModel;
 			sourceTree = "<group>";
 		};
 		558EFD01144797AF00BD8439 /* Drupal-Connect */ = {
@@ -587,8 +592,6 @@
 				557D67BF14082A2F0040E6E6 /* SalesKitAppDelegate.m in Sources */,
 				557D67C514082A2F0040E6E6 /* SalesKit.xcdatamodeld in Sources */,
 				5506E346140CC6BD00A61422 /* DownloadManager.m in Sources */,
-				5506E352140CCE2600A61422 /* MenuItem.m in Sources */,
-				5506E355140CCE2700A61422 /* SubMenuItem.m in Sources */,
 				5506E35A140D2D7000A61422 /* SettingViewController.m in Sources */,
 				5506E367140D44DB00A61422 /* SyncManager.m in Sources */,
 				5506E37A140D4A0D00A61422 /* ASIHTTPRequest.m in Sources */,
@@ -628,6 +631,9 @@
 				558EFD1C144797B000BD8439 /* DIOSViews.m in Sources */,
 				558EFD1E144797B000BD8439 /* NSData+Base64.m in Sources */,
 				558EFD2314479C3300BD8439 /* ASIFormDataRequest.m in Sources */,
+				559B65C71454799600769EE3 /* Category.m in Sources */,
+				559B65CA1454799600769EE3 /* SubCategory.m in Sources */,
+				55A7F0F31454C78F009DD5F7 /* DownloadItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -28,7 +28,7 @@
     
     //SettingViewController *settingVC = [SettingViewController shared];
     //self.window.rootViewController = settingVC;
-    
+    [DownloadManager shared];
     [SyncManager shared].managedObjectContext = self.managedObjectContext;
     
     //[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:NO];
@@ -52,6 +52,33 @@
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+- (NSNumber *)lastUpdateForNodeID:(NSNumber *)nid
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init]; 
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Category" 
+											  inManagedObjectContext:self.managedObjectContext]; 
+	[request setEntity:entity];
+	
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nodeID = %@", nid];
+    [request setPredicate:predicate];
+    
+	NSError *error;
+	NSMutableArray *mutableFetchResults = [[self.managedObjectContext 
+											executeFetchRequest:request error:&error] mutableCopy]; 
+    
+    if (mutableFetchResults == nil) {
+        NSLog(@"Can't fetch Category");
+    }
+    else if ([mutableFetchResults count] != 1) {
+        return nil;
+    }
+    else {
+        return [[mutableFetchResults objectAtIndex:0] updateDate];
+    }
+    
+    return nil;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

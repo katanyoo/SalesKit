@@ -17,7 +17,7 @@
 
 @synthesize delegate;
 
-- (id)initWithItem:(SubMenuItem *)item {
+- (id)initWithItem:(SubCategory *)item {
     self = [super init];
     if (self) {
         itemData = item;

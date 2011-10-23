@@ -28,8 +28,11 @@ typedef enum {
 
     NSInteger currentVersion;
     NSInteger itemCount;
+    NSInteger downloadItemCount;
     
     NSArray *updateList;
+    
+    //NSMutableArray *checkList;
     
     NSString *linkPath;
     NSString *menuPath;
@@ -37,6 +40,8 @@ typedef enum {
     SalesKitAppDelegate *appDelegate;
     
     DIOSNode *node;
+    
+    NSOperationQueue *operationQue;
 }
 
 + (SyncManager *) shared;

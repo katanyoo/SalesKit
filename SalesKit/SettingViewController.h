@@ -20,7 +20,7 @@
 <SyncManagerDelegate>
 {
     IBOutlet UILabel *responseStatus;
-    IBOutlet UILabel *syncStatusLabel;
+    IBOutlet UITextView *syncStatusView;
     IBOutlet UIActivityIndicatorView *indicatorView;
     //IBOutlet UITextField *syncURLField;
     IBOutlet UITextField *usernameField;

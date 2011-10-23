@@ -103,16 +103,16 @@
 
 - (void) updateStatus:(NSString *)status onState:(MIPSyncStatus)state
 {
-    responseStatus.text = status;
+    syncStatusView.text = [syncStatusView.text stringByAppendingFormat:@"\n%@", status];
     
     if (state == MIPSyncStatusError) {
-        responseStatus.textColor = [UIColor redColor];
+        //syncStatusLabel.textColor = [UIColor redColor];
     }
     else if (state == MIPSyncStatusNormal) {
-        responseStatus.textColor = [UIColor lightGrayColor];
+        //syncStatusLabel.textColor = [UIColor lightGrayColor];
     }
     else if (state == MIPSyncStatusFinish) {
-        responseStatus.textColor = [UIColor greenColor];
+        //syncStatusLabel.textColor = [UIColor greenColor];
     }
     
     if (state == MIPSyncStatusFinish || state == MIPSyncStatusError) {

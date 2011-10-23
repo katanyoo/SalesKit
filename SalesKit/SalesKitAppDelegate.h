@@ -23,5 +23,6 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+- (NSNumber *)lastUpdateForNodeID:(NSNumber *)nid;
 
 @end

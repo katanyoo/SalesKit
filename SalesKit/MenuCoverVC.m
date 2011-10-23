@@ -62,7 +62,7 @@
     self.managedObjectContext = appDelegate.managedObjectContext;
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"MenuItem" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:self.managedObjectContext];
     [request setEntity:entity];
     
     NSError *error;
@@ -94,7 +94,7 @@
     
     if ((NSNull *)cover == [NSNull null])
     {
-        NSString *imageName = ((MenuItem *)[self.menus objectAtIndex:page]).cover;
+        NSString *imageName = ((Category *)[self.menus objectAtIndex:page]).cover;
         cover = [[UIImageView alloc] initWithImage:
                  [UIImage imageWithContentsOfFile:
                   [DOCUMENTSPATH stringByAppendingPathComponent:imageName]]];
@@ -110,7 +110,7 @@
         cover.frame = CGRectMake(LANDSCAPE_WIDTH * page, 0, LANDSCAPE_WIDTH, LANDSCAPE_HEIGHT);
         [mainScroll addSubview:cover];
         
-        NSString *imageName = ((MenuItem *)[self.menus objectAtIndex:page]).cover;
+        NSString *imageName = ((Category *)[self.menus objectAtIndex:page]).cover;
         cover.image = [UIImage imageWithContentsOfFile:
                        [DOCUMENTSPATH stringByAppendingPathComponent:imageName]];
     }
