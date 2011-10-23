@@ -1,0 +1,24 @@
+//
+//  DownloadItem.m
+//  SalesKit
+//
+//  Created by Katanyoo Ubalee on 10/24/11.
+//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//
+
+#import "DownloadItem.h"
+
+
+@implementation DownloadItem
+
+@dynamic updateDate;
+@dynamic pageName;
+@dynamic nodeID;
+@dynamic weight;
+
+@dynamic imagePath;
+@dynamic linkto;
+
+@dynamic done;
+
+@end
