@@ -23,7 +23,6 @@
 		5506E396140D523200A61422 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E390140D523200A61422 /* ASIInputStream.m */; };
 		5506E397140D523200A61422 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E392140D523200A61422 /* ASIDataDecompressor.m */; };
 		5506E398140D523200A61422 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E394140D523200A61422 /* ASIDataCompressor.m */; };
-		5506E39C140E426500A61422 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506E39B140E426500A61422 /* JSONKit.m */; };
 		5506E39E140E94C400A61422 /* setting_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5506E39D140E94C400A61422 /* setting_bg.png */; };
 		552E7D6F1418E01300E283D4 /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 552E7D6E1418E01300E283D4 /* close_button.png */; };
 		55449C4C1416B7E5009C2217 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 55449C4B1416B7E5009C2217 /* Default-Landscape~ipad.png */; };
@@ -107,8 +106,6 @@
 		5506E392140D523200A61422 /* ASIDataDecompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDataDecompressor.m; sourceTree = "<group>"; };
 		5506E393140D523200A61422 /* ASIDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDataCompressor.h; sourceTree = "<group>"; };
 		5506E394140D523200A61422 /* ASIDataCompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDataCompressor.m; sourceTree = "<group>"; };
-		5506E39A140E426500A61422 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		5506E39B140E426500A61422 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		5506E39D140E94C400A61422 /* setting_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_bg.png; sourceTree = "<group>"; };
 		552E7D6E1418E01300E283D4 /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_button.png; sourceTree = "<group>"; };
 		55449C4B1416B7E5009C2217 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
@@ -223,7 +220,6 @@
 			isa = PBXGroup;
 			children = (
 				55F97BFA140EFB3C000FAA00 /* ZipArchive */,
-				5506E399140E425000A61422 /* JSONKit */,
 				55A7F0F11454C78F009DD5F7 /* DownloadItem.h */,
 				55A7F0F21454C78F009DD5F7 /* DownloadItem.m */,
 				5506E344140CC6BD00A61422 /* DownloadManager.h */,
@@ -302,15 +298,6 @@
 				5506E38B140D520600A61422 /* Reachability.m */,
 			);
 			name = Reachability;
-			sourceTree = "<group>";
-		};
-		5506E399140E425000A61422 /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				5506E39A140E426500A61422 /* JSONKit.h */,
-				5506E39B140E426500A61422 /* JSONKit.m */,
-			);
-			name = JSONKit;
 			sourceTree = "<group>";
 		};
 		55449C4E1416B832009C2217 /* HMGLTransitions */ = {
@@ -601,7 +588,6 @@
 				5506E396140D523200A61422 /* ASIInputStream.m in Sources */,
 				5506E397140D523200A61422 /* ASIDataDecompressor.m in Sources */,
 				5506E398140D523200A61422 /* ASIDataCompressor.m in Sources */,
-				5506E39C140E426500A61422 /* JSONKit.m in Sources */,
 				55F97C07140EFB3C000FAA00 /* ioapi.c in Sources */,
 				55F97C08140EFB3C000FAA00 /* mztools.c in Sources */,
 				55F97C09140EFB3C000FAA00 /* unzip.c in Sources */,
