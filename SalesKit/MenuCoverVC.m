@@ -65,6 +65,10 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:self.managedObjectContext];
     [request setEntity:entity];
     
+    NSSortDescriptor *sortByWeight = [[NSSortDescriptor alloc] initWithKey:@"weight" ascending:YES];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortByWeight]];
+    [sortByWeight release];
+    
     NSError *error;
     NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
     

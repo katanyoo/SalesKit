@@ -61,6 +61,10 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:self.managedObjectContext];
     [request setEntity:entity];
     
+    NSSortDescriptor *sortByWeight = [[NSSortDescriptor alloc] initWithKey:@"weight" ascending:YES];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortByWeight]];
+    [sortByWeight release];
+    
     NSError *error;
     NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
     
@@ -108,7 +112,7 @@
     // add the ImageView to the scroll view
     if (itemBar.view.superview == nil)
     {
-        MIPLog(@" ******* add new scroll **********");
+
         UIScrollView *menuBarScroll = (UIScrollView *)self.view;
         CGRect frame = CGRectMake(self.view.bounds.size.width * page,
                                   0,
@@ -148,9 +152,15 @@
         }
         */
         NSArray *items = [[((Category *)[self.menus objectAtIndex:page]) subCategoryItems] allObjects];
+        
+        NSSortDescriptor *sortByWeight = [[NSSortDescriptor alloc] initWithKey:@"weight" ascending:YES];
+
+        NSArray *sortedItems = [items sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortByWeight]];
+        [sortByWeight release];
+        
         //MIPLog(@"item count = %i", [items count]);
         //MIPLog(@"items = %@", [[items objectAtIndex:0] image]);
-        [itemBar setupBarWithItems:items];
+        [itemBar setupBarWithItems:sortedItems];
         
         [menuBarScroll addSubview:itemBar.view];
     }
