@@ -7,7 +7,6 @@
 //
 
 #import "SettingViewController.h"
-#import "JSONKit.h"
 #import "UIConfig.h"
 
 @implementation SettingViewController

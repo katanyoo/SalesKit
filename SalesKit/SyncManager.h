@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "DownloadManager.h"
 #import "ZipArchive.h"
-#import "JSONKit.h"
 #import "DIOSUser.h"
 #import "DIOSNode.h"
 #import "SalesKitAppDelegate.h"

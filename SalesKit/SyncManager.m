@@ -654,7 +654,7 @@ static SyncManager *shared = nil;
 
 - (void)startSyncWithURL:(NSURL *)url
 {
-    [self grabURLInBackground:url];
+    //[self grabURLInBackground:url];
 }
 
 
@@ -730,7 +730,7 @@ static SyncManager *shared = nil;
         return YES;
     }
 }
-
+/*
 - (BOOL) setDataToDatabase
 {
     BOOL success = YES;
@@ -768,7 +768,7 @@ static SyncManager *shared = nil;
     }
     return success;
 }
-
+*/
 #pragma mark - Zip Delegate
 
 -(void) zipArchive:(ZipArchive *)zipArch disFinishUnzipFile:(NSString *)path

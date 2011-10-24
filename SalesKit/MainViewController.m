@@ -353,7 +353,7 @@
     
     menuBarVC.delegate = self;
     [menuBarVC reloadView];
-    [bigView addSubview:menuBarVC.view]; 
+    [self.view addSubview:menuBarVC.view]; 
     
     [self reloadData];
     [self reloadView];
