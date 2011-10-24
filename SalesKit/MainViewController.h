@@ -39,6 +39,6 @@ SettingViewControllerDelegate>
 }
 
 - (void) reloadView;
-
+- (void) reloadData;
 
 @end

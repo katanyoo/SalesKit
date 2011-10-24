@@ -201,7 +201,8 @@
         
         [UIView commitAnimations];
         
-        [self reloadView];
+//        [self reloadView];
+        [self reloadData];
     }
 }
 
@@ -243,6 +244,13 @@
     
 }
 
+- (void)reloadData
+{
+    [mainScrollVC reloadView];
+    pageControl.numberOfPages = [mainScrollVC numberOfPage];
+    pageName.text = [mainScrollVC currentPageName];
+}
+
 #pragma mark - View lifecycle
 
 - (void)reloadView
@@ -253,7 +261,7 @@
     pageControl.frame = CGRectMake(0, WEBVIEW_HEIGHT - pageControl.frame.size.height - 10,
                                    pageControl.frame.size.width, pageControl.frame.size.height);
     
-    //[self.view addSubview:pageControl];
+    [self.view addSubview:pageControl];
     //pageControl.backgroundColor = [UIColor blackColor];
     pageControl.currentPage = 0;
     //pageControl.numberOfPages = [mainScrollVC numberOfPage];
@@ -263,7 +271,7 @@
                                 WEBVIEW_HEIGHT - pageControl.frame.size.height - pageName.frame.size.height,
                                 pageName.frame.size.width, 
                                 pageName.frame.size.height);
-    //[self.view addSubview:pageName];
+    [self.view addSubview:pageName];
     
     UIWebView *web = (UIWebView *)webViewVC.view;
     web.delegate = self;
@@ -313,11 +321,13 @@
     
     mainScrollVC.delegate = self;
     mainScrollVC.view.tag = MAINSCROLL_TAG;
-    [mainScrollVC reloadView];
+    //[mainScrollVC reloadView];
     
     CGRect rect = mainScrollVC.view.frame;
     rect.origin = CGPointMake(0, 200);
     mainScrollVC.view.frame = rect;
+    
+    [self reloadData];
     
     [bigView addSubview:mainScrollVC.view];
     

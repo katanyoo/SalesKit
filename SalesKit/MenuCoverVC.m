@@ -95,9 +95,11 @@
     if ((NSNull *)cover == [NSNull null])
     {
         NSString *imageName = ((Category *)[self.menus objectAtIndex:page]).cover;
-        cover = [[UIImageView alloc] initWithImage:
-                 [UIImage imageWithContentsOfFile:
-                  [DOCUMENTSPATH stringByAppendingPathComponent:imageName]]];
+//        cover = [[UIImageView alloc] initWithImage:
+//                 [UIImage imageWithContentsOfFile:
+//                  [DOCUMENTSPATH stringByAppendingPathComponent:imageName]]];
+
+        cover = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imageName]];
         
         [self.viewList replaceObjectAtIndex:page withObject:cover];
         [cover release];
@@ -111,8 +113,10 @@
         [mainScroll addSubview:cover];
         
         NSString *imageName = ((Category *)[self.menus objectAtIndex:page]).cover;
-        cover.image = [UIImage imageWithContentsOfFile:
-                       [DOCUMENTSPATH stringByAppendingPathComponent:imageName]];
+//        cover.image = [UIImage imageWithContentsOfFile:
+//                       [DOCUMENTSPATH stringByAppendingPathComponent:imageName]];
+        
+        cover.image = [UIImage imageWithContentsOfFile:imageName];
     }
 }
 
@@ -159,6 +163,10 @@
 
 #pragma mark - Method
 
+- (NSString *) currentPageName
+{
+    return [[self.menus objectAtIndex:currentPage] pageName];
+}
 - (NSInteger) numberOfPage
 {
     return [self.menus count];
