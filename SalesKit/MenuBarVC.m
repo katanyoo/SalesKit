@@ -121,8 +121,34 @@
                                                         blue:0.2
                                                        alpha:1.0];
         */
+        /*
+        Category *cat = (Category *)[self.menus objectAtIndex:page];
+                                     
+        NSFetchRequest *tmpRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *tmpEntity = [NSEntityDescription entityForName:@"SubCategory" inManagedObjectContext:self.managedObjectContext];
+        [tmpRequest setEntity:tmpEntity];
+        
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"CategoryItem = %@", cat];
+        [tmpRequest setPredicate:pred];
+        
+        NSError *tmpError;
+        NSArray *tmpResult = [self.managedObjectContext executeFetchRequest:tmpRequest error:&tmpError];
+        if (tmpResult == nil) {
+            MIPLog(@"Fetch SubCategory Node Error!!");
+        }
+        else if ([tmpResult count] == 0) {
+            MIPLog(@"Have no SubCategory Node");
+        }
+        else {
+            MIPLog(@"item count = %i", [tmpResult count]);
+            MIPLog(@"items = %@", [[tmpResult objectAtIndex:0] image]);
+            [itemBar setupBarWithItems:tmpResult];
+            [menuBarScroll addSubview:itemBar.view];
+        }
+        */
         NSArray *items = [[((Category *)[self.menus objectAtIndex:page]) subCategoryItems] allObjects];
         MIPLog(@"item count = %i", [items count]);
+        //MIPLog(@"items = %@", [[items objectAtIndex:0] image]);
         [itemBar setupBarWithItems:items];
         
         [menuBarScroll addSubview:itemBar.view];

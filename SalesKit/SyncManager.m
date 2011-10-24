@@ -246,9 +246,31 @@ static SyncManager *shared = nil;
     newNode.nodeID = [successNode objectForKey:@"nid"];
     newNode.updateDate = [successNode objectForKey:@"changed"];
     //newNode.pageName = [successNode objectForKey:@"title"];
-    newNode.image = [successNode objectForKey:@"cover"];
+    newNode.image = [successNode objectForKey:@"image"];
     newNode.weight = [successNode objectForKey:@"weight"];
     newNode.linkto = [successNode objectForKey:@"linkto"];
+    
+    NSFetchRequest *tmpRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *tmpEntity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:appDelegate.managedObjectContext];
+    [tmpRequest setEntity:tmpEntity];
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"nodeID = %@", [successNode objectForKey:@"parentNodeID"]];
+    [tmpRequest setPredicate:pred];
+    
+    NSError *tmpError;
+    NSArray *tmpResult = [appDelegate.managedObjectContext executeFetchRequest:tmpRequest error:&tmpError];
+    if (tmpResult == nil) {
+        MIPLog(@"Fetch Category Node Error!!");
+    }
+    else if ([tmpResult count] == 0) {
+        MIPLog(@"Have no Category Node");
+    }
+    else {
+        Category *cat = (Category *)[tmpResult objectAtIndex:0];
+        newNode.CategoryItem = cat;
+        [cat addSubCategoryItemsObject:newNode];
+        //MIPLog(@"%@", [[tmpResult objectAtIndex:0] cover]);
+    }
     
     NSError *error;
     if (![appDelegate.managedObjectContext save:&error]) {
@@ -280,7 +302,6 @@ static SyncManager *shared = nil;
             [successNode setObject:[request downloadDestinationPath] forKey:@"cover"];
             [successNode setObject:dlitem.weight forKey:@"weight"];
             
-            
             if ([[operation valueForKey:[NSString stringWithFormat:@"%@", dlitem.nodeID]] isEqualToString:@"add"]) {
                 [self addCategoryNode:successNode];
             }
@@ -294,6 +315,7 @@ static SyncManager *shared = nil;
             [successNode setObject:[request downloadDestinationPath] forKey:@"image"];
             [successNode setObject:dlitem.weight forKey:@"weight"];
             [successNode setObject:dlitem.linkto forKey:@"linkto"];
+            [successNode setObject:dlitem.parentNodeID forKey:@"parentNodeID"];
             
             if ([[operation valueForKey:[NSString stringWithFormat:@"%@", dlitem.nodeID]] isEqualToString:@"add"]) {
                 [self addSubCategoryNode:successNode];
@@ -334,6 +356,7 @@ static SyncManager *shared = nil;
         catNode.imagePath = [imageURL absoluteString];
         catNode.weight = [[[[nodeDetail objectForKey:@"field_weight"] objectForKey:@"und"] objectAtIndex:0] objectForKey:@"value"];
         catNode.linkto = nil;
+        catNode.parentNodeID = nil;
         catNode.done = NO;
         
         /*
@@ -365,7 +388,7 @@ static SyncManager *shared = nil;
         subCatNode.updateDate = [nodeDetail objectForKey:@"changed"];
         subCatNode.pageName = [nodeDetail objectForKey:@"title"];
         subCatNode.imagePath = [imageURL absoluteString];
-        
+        subCatNode.parentNodeID = [[[[nodeDetail objectForKey:@"field_parent_menu"] objectForKey:@"und"] objectAtIndex:0] objectForKey:@"nid"];
         subCatNode.weight = [[[[nodeDetail objectForKey:@"field_weight"] objectForKey:@"und"] objectAtIndex:0] objectForKey:@"value"];
         
         if (![[nodeDetail objectForKey:@"field_embed_web"] isKindOfClass:[NSArray class]]) {
@@ -485,7 +508,7 @@ static SyncManager *shared = nil;
             tmp = nil;
         }
         
-        tmp = (NSArray *)[nn nodeGetWithType:@"sub_category" pageSize:30 page:i];
+        tmp = (NSArray *)[nn nodeGetWithType:@"category" pageSize:30 page:i];
         if ([tmp count] > 0) {
             [connResult addObjectsFromArray:tmp];
             ++i;
@@ -498,7 +521,7 @@ static SyncManager *shared = nil;
             tmp = nil;
         }
         
-        tmp = (NSArray *)[nn nodeGetWithType:@"category" pageSize:30 page:i];
+        tmp = (NSArray *)[nn nodeGetWithType:@"sub_category" pageSize:30 page:i];
         if ([tmp count] > 0) {
             [connResult addObjectsFromArray:tmp];
             ++i;

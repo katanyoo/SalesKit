@@ -249,6 +249,8 @@
     [mainScrollVC reloadView];
     pageControl.numberOfPages = [mainScrollVC numberOfPage];
     pageName.text = [mainScrollVC currentPageName];
+    
+    [menuBarVC reloadView];
 }
 
 #pragma mark - View lifecycle

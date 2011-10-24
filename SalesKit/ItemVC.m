@@ -69,9 +69,11 @@
     [super viewDidLoad];
     
     MIPLog(@"%@", itemData.image);
-    UIImage *img = [UIImage imageWithContentsOfFile:
-                    [DOCUMENTSPATH stringByAppendingPathComponent:itemData.image]];
-    
+//    UIImage *img = [UIImage imageWithContentsOfFile:
+//                    [DOCUMENTSPATH stringByAppendingPathComponent:itemData.image]];
+
+    UIImage *img = [UIImage imageWithContentsOfFile:itemData.image];
+
     buttonItem = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonItem.frame = CGRectMake(0, 
                                   0, 

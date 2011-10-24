@@ -20,7 +20,7 @@
 
 @property (nonatomic, retain) NSString * imagePath;
 @property (nonatomic, retain) NSString * linkto;
-@property (nonatomic, retain) NSString * parentID;
+@property (nonatomic, retain) NSNumber * parentNodeID;
 
 @property (nonatomic, assign) BOOL done;
 

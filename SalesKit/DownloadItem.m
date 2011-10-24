@@ -18,6 +18,7 @@
 
 @synthesize imagePath;
 @synthesize linkto;
+@synthesize parentNodeID;
 
 @synthesize done;
 
