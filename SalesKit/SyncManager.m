@@ -229,9 +229,31 @@ static SyncManager *shared = nil;
     newNode.cover = [successNode objectForKey:@"cover"];
     newNode.weight = [successNode objectForKey:@"weight"];
     
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubCategory" inManagedObjectContext:appDelegate.managedObjectContext];
+    [request setEntity:entity];
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"parentNodeID = %@", newNode.nodeID];
+    [request setPredicate:pred];
+    
     NSError *error;
-    if (![appDelegate.managedObjectContext save:&error]) {
-        MIPLog(@"Add new Category FAIL : %@", [error localizedDescription]);
+    NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+    
+    if (!result) {
+        MIPLog(@"fetch error");
+    }
+    else if ([result count] == 0) {
+        MIPLog(@"have no sub category entity");
+    }
+    else {
+        for (id obj in result) {
+            [newNode addSubCategoryItemsObject:obj];
+        }
+    }
+    NSError *finalError;
+    if (![appDelegate.managedObjectContext save:&finalError]) {
+        MIPLog(@"Add new Category FAIL : %@", [finalError localizedDescription]);
     }
     else {
         MIPLog(@"Add new Category SUCCESS");
@@ -249,6 +271,7 @@ static SyncManager *shared = nil;
     newNode.image = [successNode objectForKey:@"image"];
     newNode.weight = [successNode objectForKey:@"weight"];
     newNode.linkto = [successNode objectForKey:@"linkto"];
+    newNode.parentNodeID = [successNode objectForKey:@"parentNodeID"];
     
     NSFetchRequest *tmpRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *tmpEntity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:appDelegate.managedObjectContext];
@@ -339,7 +362,7 @@ static SyncManager *shared = nil;
     
     if ([nodeType isEqualToString:@"category"]) {
         
-        MIPLog(@"%@", nodeDetail);
+        //MIPLog(@"%@", nodeDetail);
         
         NSString *imageName = [[[[nodeDetail objectForKey:@"field_image"] 
                                  objectForKey:@"und"] 
@@ -431,7 +454,72 @@ static SyncManager *shared = nil;
 
 - (void)updateNode:(NSNumber *)nid
 {
+    
+    NSDictionary *nodeDetail = [self getNodeDetail:nid];
+    NSString *nodeType = [nodeDetail objectForKey:@"type"];
+    
     [operation setValue:@"update" forKey:[NSString stringWithFormat:@"%@",nid]];
+    
+    if ([nodeType isEqualToString:@"category"]) {
+        
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:appDelegate.managedObjectContext];
+        [request setEntity:entity];
+        
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"nodeID = %@", nid];
+        [request setPredicate:pred];
+        
+        NSError *error;
+        NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+        
+        if (!result) {
+            MIPLog(@"fetch error");
+        }
+        else if ([result count] == 0) {
+            MIPLog(@"have no entity");
+        }
+        else {
+            [appDelegate.managedObjectContext deleteObject:[result objectAtIndex:0]];
+            
+            NSError *saveError;
+            if (![appDelegate.managedObjectContext save:&saveError]) {
+                MIPLog(@"delete error");
+            }
+            else {
+                [self addNewNode:nid];
+            }
+        }
+        
+    }
+    else if ([nodeType isEqualToString:@"sub_category"]) {
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubCategory" inManagedObjectContext:appDelegate.managedObjectContext];
+        [request setEntity:entity];
+        
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"nodeID = %@", nid];
+        [request setPredicate:pred];
+        
+        NSError *error;
+        NSArray *result = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+        
+        if (!result) {
+            MIPLog(@"fetch error");
+        }
+        else if ([result count] == 0) {
+            MIPLog(@"have no entity");
+        }
+        else {
+            [appDelegate.managedObjectContext deleteObject:[result objectAtIndex:0]];
+            
+            NSError *saveError;
+            if (![appDelegate.managedObjectContext save:&saveError]) {
+                MIPLog(@"delete error");
+            }
+            else {
+                [self addNewNode:nid];
+            }
+        }
+    }
 }
 
 - (void)removeNode:(NSNumber *)nid

@@ -167,6 +167,11 @@
 
 #pragma mark - Method
 
+- (NSInteger) currentPage
+{
+    return currentPage;
+}
+
 - (NSString *) currentPageName
 {
     return [[self.menus objectAtIndex:currentPage] pageName];
@@ -195,6 +200,8 @@
     }
     self.viewList = views;
     [views release];
+    
+
     
     UIScrollView *mainScroll = (UIScrollView *)self.view;
     mainScroll.delegate = self;

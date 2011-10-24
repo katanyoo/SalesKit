@@ -220,27 +220,37 @@
 {
 }
 */
+
 - (void) reloadView
 {
     [self reloadData];
     
-    NSMutableArray *views = [[NSMutableArray alloc] init];
-    for (unsigned i = 0; i < [self.menus count]; i++)
-    {
-		[views addObject:[NSNull null]];
+    if ([[self.view subviews] count] > 0) {
+        for (UIView *tmp in [self.view subviews]) {
+            [tmp removeFromSuperview];
+        }
     }
-    self.viewList = views;
-    [views release];
     
-    UIScrollView *tempScrollView=(UIScrollView *)self.view;
-    tempScrollView.delegate = self;
-    
-    tempScrollView.frame = CGRectMake(0, LANDSCAPE_HEIGHT - MENUBAR_HEIGHT, LANDSCAPE_WIDTH, MENUBAR_HEIGHT);
-    tempScrollView.contentSize = CGSizeMake(LANDSCAPE_WIDTH * [self.menus count],
-                                            MENUBAR_HEIGHT);
-    
-    [self loadScrollViewWithPage:0];
-    [self loadScrollViewWithPage:1];
+    if ([self.menus count] > 0) {
+        
+        NSMutableArray *views = [[NSMutableArray alloc] init];
+        for (unsigned i = 0; i < [self.menus count]; i++)
+        {
+            [views addObject:[NSNull null]];
+        }
+        self.viewList = views;
+        [views release];
+        
+        UIScrollView *tempScrollView=(UIScrollView *)self.view;
+        tempScrollView.delegate = self;
+        
+        tempScrollView.frame = CGRectMake(0, LANDSCAPE_HEIGHT - MENUBAR_HEIGHT, LANDSCAPE_WIDTH, MENUBAR_HEIGHT);
+        tempScrollView.contentSize = CGSizeMake(LANDSCAPE_WIDTH * [self.menus count],
+                                                MENUBAR_HEIGHT);
+        
+        [self loadScrollViewWithPage:0];
+        [self loadScrollViewWithPage:1];
+    }
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.

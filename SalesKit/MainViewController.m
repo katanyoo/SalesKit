@@ -267,9 +267,10 @@
 {
     [mainScrollVC reloadView];
     pageControl.numberOfPages = [mainScrollVC numberOfPage];
+    pageControl.currentPage = [mainScrollVC currentPage];
     pageName.text = [mainScrollVC currentPageName];
     
-    [menuBarVC reloadData];
+    [menuBarVC reloadView];
 }
 
 #pragma mark - View lifecycle
@@ -321,9 +322,9 @@
     [self.view addSubview:close_bt];
     
     
-    menuBarVC.delegate = self;
-    [menuBarVC reloadView];
-    [self.view addSubview:menuBarVC.view];   
+//    menuBarVC.delegate = self;
+//    [menuBarVC reloadView];
+//    [self.view addSubview:menuBarVC.view];   
     //[bigView addSubview:menuBarVC.view];
     
     [HMGLTransitionManager sharedTransitionManager];
@@ -348,8 +349,11 @@
     CGRect rect = mainScrollVC.view.frame;
     rect.origin = CGPointMake(0, 200);
     mainScrollVC.view.frame = rect;
-    
     [bigView addSubview:mainScrollVC.view];
+    
+    menuBarVC.delegate = self;
+    [menuBarVC reloadView];
+    [bigView addSubview:menuBarVC.view]; 
     
     [self reloadData];
     [self reloadView];

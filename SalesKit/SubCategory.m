@@ -2,7 +2,7 @@
 //  SubCategory.m
 //  SalesKit
 //
-//  Created by Katanyoo Ubalee on 10/24/11.
+//  Created by Katanyoo Ubalee on 10/25/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @dynamic nodeID;
 @dynamic image;
 @dynamic linkto;
+@dynamic parentNodeID;
 @dynamic CategoryItem;
 
 

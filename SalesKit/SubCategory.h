@@ -2,7 +2,7 @@
 //  SubCategory.h
 //  SalesKit
 //
-//  Created by Katanyoo Ubalee on 10/24/11.
+//  Created by Katanyoo Ubalee on 10/25/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSNumber * nodeID;
 @property (nonatomic, retain) NSString * image;
 @property (nonatomic, retain) NSString * linkto;
+@property (nonatomic, retain) NSNumber * parentNodeID;
 @property (nonatomic, retain) Category * CategoryItem;
 
 @end

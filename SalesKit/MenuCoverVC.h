@@ -33,5 +33,6 @@
 - (NSInteger) numberOfPage;
 - (void) reloadView;
 - (NSString *) currentPageName;
+- (NSInteger) currentPage;
 
 @end
