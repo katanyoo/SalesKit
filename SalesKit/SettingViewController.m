@@ -105,12 +105,16 @@
 - (void) syncManagerDidFinishSync
 {
     [self updateStatus:@"Finish Sync!!!" onState:MIPSyncStatusFinish];
+    closeBT.enabled = YES;
 }
 
 - (void) updateStatus:(NSString *)status onState:(MIPSyncStatus)state
 {
     MIPLog(@"%@", status);
-    syncStatusView.text = [syncStatusView.text stringByAppendingFormat:@"\n%@", status];
+    if (syncStatusView) {
+        NSString *update = [syncStatusView.text stringByAppendingFormat:@"\n%@", status];
+        [syncStatusView performSelectorOnMainThread:@selector(setText:) withObject:update waitUntilDone:NO];
+    }
     
     if (state == MIPSyncStatusError) {
         //syncStatusLabel.textColor = [UIColor redColor];
@@ -152,11 +156,12 @@
 - (IBAction) startSync
 {
     //[[SyncManager shared] startSyncWithURL:[self urlForSync]];// grabURLInBackground:[self urlForSync]];
+    closeBT.enabled = NO;
     [[SyncManager shared] startSync];
     
 }
 
-- (void) endSync
+- (IBAction) endSync
 {
     if ([delegate respondsToSelector:@selector(needSync:)]) {
         [delegate needSync:NO];

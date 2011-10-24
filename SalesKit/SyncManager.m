@@ -199,6 +199,7 @@ static SyncManager *shared = nil;
         [zipper UnzipFileTo:[destinationPath stringByDeletingLastPathComponent] 
                   overWrite:YES];
     }
+    [zipper release];
 }
 
 - (void) downloadManager:(DownloadManager *)downloadManager didFailDownloadWithPath:(NSString *)destinationPath error:(NSString *)errorMessage {
@@ -283,6 +284,7 @@ static SyncManager *shared = nil;
             if ([[operation valueForKey:[NSString stringWithFormat:@"%@", dlitem.nodeID]] isEqualToString:@"add"]) {
                 [self addCategoryNode:successNode];
             }
+            [successNode release];
         }
         else {
             NSMutableDictionary *successNode = [[NSMutableDictionary alloc] init];
@@ -296,6 +298,7 @@ static SyncManager *shared = nil;
             if ([[operation valueForKey:[NSString stringWithFormat:@"%@", dlitem.nodeID]] isEqualToString:@"add"]) {
                 [self addSubCategoryNode:successNode];
             }
+            [successNode release];
         }
     }
 }

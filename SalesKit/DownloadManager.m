@@ -67,7 +67,7 @@
 
 - (void) downloadingItem:(ASIHTTPRequest *)request
 {
-    NSString *filename = [[request url] lastPathComponent];
+    //NSString *filename = [[request url] lastPathComponent];
     //[[SyncManager shared] setStatus:filename onState:MIPSyncStatusNormal];
 }
 
@@ -225,22 +225,22 @@
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     // Use when fetching text data
-    NSString *responseString = [request responseString];
+    //NSString *responseString = [request responseString];
     
     // Use when fetching binary data
-    NSData *responseData = [request responseData];
+    //NSData *responseData = [request responseData];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-    NSError *error = [request error];
+    //NSError *error = [request error];
 }
 
 
 #pragma mark - Shared Method
 
-static DownloadManager *shared = nil;
-
+//static DownloadManager *shared = nil;
+/*
 + (DownloadManager *) shared
 {
     @synchronized(self)
@@ -252,5 +252,5 @@ static DownloadManager *shared = nil;
     }
     return shared;
 }
-
+*/
 @end

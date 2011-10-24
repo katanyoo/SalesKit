@@ -28,7 +28,7 @@
     
     //SettingViewController *settingVC = [SettingViewController shared];
     //self.window.rootViewController = settingVC;
-    [DownloadManager shared];
+    //[DownloadManager shared];
     [SyncManager shared].managedObjectContext = self.managedObjectContext;
     
     //[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:NO];
@@ -68,7 +68,7 @@
     
 	NSError *error;
 	NSArray *results = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy]; 
-    
+    [request release];
     if (results == nil) {
         MIPLog(@"Can't fetch Category");
         NSFetchRequest *requestSub = [[NSFetchRequest alloc] init]; 
@@ -81,10 +81,12 @@
         
         NSError *errorSub;
         NSArray *resultSub = [[self.managedObjectContext executeFetchRequest:requestSub error:&errorSub] mutableCopy];
+        [requestSub release];
         if (resultSub == nil) {
             MIPLog(@"Can't fetch Sub Category");
         }
         else if ([resultSub count] != 1) {
+            [resultSub release];
             return nil;
         }
         else {
@@ -92,6 +94,7 @@
         }
     }
     else if ([results count] != 1) {
+        [results release];
         NSFetchRequest *requestSub = [[NSFetchRequest alloc] init]; 
         NSEntityDescription *entitySub = [NSEntityDescription entityForName:@"SubCategory" 
                                                   inManagedObjectContext:self.managedObjectContext]; 
@@ -102,10 +105,12 @@
         
         NSError *errorSub;
         NSArray *resultSub = [[self.managedObjectContext executeFetchRequest:requestSub error:&errorSub] mutableCopy];
+        [requestSub release];
         if (resultSub == nil) {
             MIPLog(@"Can't fetch Sub Category");
         }
         else if ([resultSub count] != 1) {
+            [resultSub release];
             return nil;
         }
         else {
@@ -117,6 +122,7 @@
         return [[results objectAtIndex:0] updateDate];
     }
     
+    [results release];
     return nil;
 }
 

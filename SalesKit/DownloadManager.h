@@ -29,7 +29,7 @@
     
 }
 
-+ (DownloadManager *) shared;
+//+ (DownloadManager *) shared;
 - (void) startDownloadWithItem:(DownloadItem *)item;
 - (void) startDownloadWithNodeList:(NSArray *)nodeList;
 - (void)startDownloadWithURL:(NSURL *)url;

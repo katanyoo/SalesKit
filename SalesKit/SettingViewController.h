@@ -25,13 +25,14 @@
     //IBOutlet UITextField *syncURLField;
     IBOutlet UITextField *usernameField;
     IBOutlet UITextField *passwordField;
+    IBOutlet UIButton *closeBT;
     
 }
 
 - (IBAction) startSync;
 - (IBAction) login;
 - (IBAction) logout;
-- (void) endSync;
+- (IBAction) endSync;
 + (SettingViewController *)shared;
 
 @property (nonatomic, retain) IBOutlet UIProgressView *progressView;
