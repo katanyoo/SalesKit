@@ -26,6 +26,7 @@
 @synthesize linkPath;
 @synthesize menuPath;
 @synthesize node;
+@synthesize nodeListForOperation;
 
 - (id)init {
     self = [super init];
@@ -33,6 +34,7 @@
         appDelegate = (SalesKitAppDelegate *)[[UIApplication sharedApplication] delegate];
         operationQue = [[NSOperationQueue alloc] init];
         self.node = [[DIOSNode alloc] initWithSession:appDelegate.session];
+        operation = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -54,7 +56,7 @@ static SyncManager *shared = nil;
 }
 
 #pragma mark - Object Methods
-
+/*
 - (void)grabURLInBackground:(NSURL *)url
 {
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -63,7 +65,8 @@ static SyncManager *shared = nil;
     
     [self setStatus:@"Checking for update" onState:MIPSyncStatusNormal];
 }
-
+*/
+/*
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
 
@@ -71,10 +74,10 @@ static SyncManager *shared = nil;
         [delegate syncManagerDidFinishSyncVersionWithJSONString:[request responseString]];
     }
     
-    /*
-    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
-    NSLog(@"%@", [[NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:nil] objectFromJSONString]);
-    */
+    
+//    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
+//    NSLog(@"%@", [[NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:nil] objectFromJSONString]);
+    
     NSArray *version = [NSArray arrayWithArray:[[[request responseString] objectFromJSONString] objectForKey:@"versions"]];
     
     
@@ -90,13 +93,13 @@ static SyncManager *shared = nil;
     
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
-    /*
-    if (self.updateList) {
-        [self.updateList release];
-        self.updateList = nil;
-    }
-    self.updateList = [filtered sortedArrayUsingDescriptors:sortDescriptors];
-    */
+    
+//    if (self.updateList) {
+//        [self.updateList release];
+//        self.updateList = nil;
+//    }
+//    self.updateList = [filtered sortedArrayUsingDescriptors:sortDescriptors];
+
     
     self.updateList = [filtered sortedArrayUsingDescriptors:sortDescriptors];
     if ([self.updateList count] > 0) {
@@ -112,13 +115,14 @@ static SyncManager *shared = nil;
         [delegate syncManagerDidFinishSyncVersionWithItemCount:[self.updateList count]];
     }
 }
-
+*/
+/*
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
     NSError *error = [request error];
     [self setStatus:[error localizedDescription] onState:MIPSyncStatusError];
 }
-
+*/
 #pragma mark - DIOS Methods
 - (void) displayDebugDIOS:(id)aDIOSConnect {
     //responseStatus.text = [aDIOSConnect responseStatusMessage];
@@ -226,10 +230,32 @@ static SyncManager *shared = nil;
     
     NSError *error;
     if (![appDelegate.managedObjectContext save:&error]) {
-        MIPLog(@"Add new node FAIL : %@", [error localizedDescription]);
+        MIPLog(@"Add new Category FAIL : %@", [error localizedDescription]);
     }
     else {
-        MIPLog(@"Add new node SUCCESS");
+        MIPLog(@"Add new Category SUCCESS");
+        [self startNextOperation];
+    }
+}
+
+- (void) addSubCategoryNode:(NSDictionary *)successNode
+{
+    SubCategory *newNode = (SubCategory *)[NSEntityDescription insertNewObjectForEntityForName:@"SubCategory" inManagedObjectContext:appDelegate.managedObjectContext];
+    
+    newNode.nodeID = [successNode objectForKey:@"nid"];
+    newNode.updateDate = [successNode objectForKey:@"changed"];
+    //newNode.pageName = [successNode objectForKey:@"title"];
+    newNode.image = [successNode objectForKey:@"cover"];
+    newNode.weight = [successNode objectForKey:@"weight"];
+    newNode.linkto = [successNode objectForKey:@"linkto"];
+    
+    NSError *error;
+    if (![appDelegate.managedObjectContext save:&error]) {
+        MIPLog(@"Add new SubCategory FAIL : %@", [error localizedDescription]);
+    }
+    else {
+        MIPLog(@"Add new SubCategory SUCCESS");
+        [self startNextOperation];
     }
 }
 
@@ -252,11 +278,29 @@ static SyncManager *shared = nil;
             [successNode setObject:dlitem.pageName forKey:@"title"];
             [successNode setObject:[request downloadDestinationPath] forKey:@"cover"];
             [successNode setObject:dlitem.weight forKey:@"weight"];
+            
+            
+            if ([[operation valueForKey:[NSString stringWithFormat:@"%@", dlitem.nodeID]] isEqualToString:@"add"]) {
+                [self addCategoryNode:successNode];
+            }
+        }
+        else {
+            NSMutableDictionary *successNode = [[NSMutableDictionary alloc] init];
+            [successNode setObject:dlitem.nodeID forKey:@"nid"];
+            [successNode setObject:dlitem.updateDate forKey:@"changed"];
+            [successNode setObject:dlitem.pageName forKey:@"title"];
+            [successNode setObject:[request downloadDestinationPath] forKey:@"image"];
+            [successNode setObject:dlitem.weight forKey:@"weight"];
+            [successNode setObject:dlitem.linkto forKey:@"linkto"];
+            
+            if ([[operation valueForKey:[NSString stringWithFormat:@"%@", dlitem.nodeID]] isEqualToString:@"add"]) {
+                [self addSubCategoryNode:successNode];
+            }
         }
     }
 }
 
-- (void) downloadManager:(DownloadManager *)downloadManager didFailDownloadWithRequest:(ASIHTTPRequest *)request
+- (void) downloadManager:(DownloadManager *)downloadManager didFailDownloadWithRequest:(ASIHTTPRequest *)request forObject:(id)obj
 {
     
 }
@@ -266,6 +310,8 @@ static SyncManager *shared = nil;
     NSDictionary *nodeDetail = [self getNodeDetail:nid];
     NSString *nodeType = [nodeDetail objectForKey:@"type"];
     
+    [operation setValue:@"add" forKey:[NSString stringWithFormat:@"%@",nid]];
+    
     if ([nodeType isEqualToString:@"category"]) {
         
         MIPLog(@"%@", nodeDetail);
@@ -274,20 +320,23 @@ static SyncManager *shared = nil;
                                  objectForKey:@"und"] 
                                 objectAtIndex:0]
                                objectForKey:@"filename"];
-        NSString *imagePath = [BASE_FILES_URL stringByAppendingPathComponent:imageName];
+        //NSString *imagePath = [BASE_FILES_URL stringByAppendingPathComponent:imageName];
+        NSURL *imageURL = [[NSURL URLWithString:BASE_FILES_URL] URLByAppendingPathComponent:imageName];
+        
         
         DownloadItem *catNode = [[DownloadItem alloc] init];
         catNode.nodeID = [nodeDetail objectForKey:@"nid"];
         catNode.updateDate = [nodeDetail objectForKey:@"changed"];
         catNode.pageName = [nodeDetail objectForKey:@"title"];
-        catNode.imagePath = imagePath;
+        catNode.imagePath = [imageURL absoluteString];
         catNode.weight = [[[[nodeDetail objectForKey:@"field_weight"] objectForKey:@"und"] objectAtIndex:0] objectForKey:@"value"];
         catNode.linkto = nil;
         catNode.done = NO;
         
+        /*
         NSArray *downloadList = [NSArray arrayWithObject:catNode];
-        
         downloadItemCount = [downloadList count];
+        */
         
         DownloadManager *dl = [[DownloadManager alloc] init];
         dl.delegate = self;
@@ -298,18 +347,76 @@ static SyncManager *shared = nil;
         }*/
     }
     else if ([nodeType isEqualToString:@"sub_category"]) {
-        MIPLog(@"%@", nodeDetail);
+        MIPLog(@"%@", [nodeDetail objectForKey:@"nid"]);
+        
+        NSString *imageName = [[[[nodeDetail objectForKey:@"field_image"] 
+                                 objectForKey:@"und"] 
+                                objectAtIndex:0]
+                               objectForKey:@"filename"];
+        //NSString *imagePath = [BASE_FILES_URL stringByAppendingPathComponent:imageName];
+        NSURL *imageURL = [[NSURL URLWithString:BASE_FILES_URL] URLByAppendingPathComponent:imageName];
+        
+        DownloadItem *subCatNode = [[DownloadItem alloc] init];
+        
+        subCatNode.nodeID = [nodeDetail objectForKey:@"nid"];
+        subCatNode.updateDate = [nodeDetail objectForKey:@"changed"];
+        subCatNode.pageName = [nodeDetail objectForKey:@"title"];
+        subCatNode.imagePath = [imageURL absoluteString];
+        
+        subCatNode.weight = [[[[nodeDetail objectForKey:@"field_weight"] objectForKey:@"und"] objectAtIndex:0] objectForKey:@"value"];
+        
+        if (![[nodeDetail objectForKey:@"field_embed_web"] isKindOfClass:[NSArray class]]) {
+            MIPLog(@"web");
+            NSString *fileName = [[[[nodeDetail objectForKey:@"field_embed_web"] 
+                                     objectForKey:@"und"] 
+                                    objectAtIndex:0]
+                                   objectForKey:@"filename"];
+            NSString *filePath = [[[NSURL URLWithString:BASE_FILES_URL] URLByAppendingPathComponent:fileName] absoluteString];
+            
+            subCatNode.linkto = filePath;
+        }
+        else if (![[nodeDetail objectForKey:@"field_link"] isKindOfClass:[NSArray class]]) {
+            MIPLog(@"link");
+            MIPLog(@"%@", [nodeDetail class]);
+            NSString *linkURL = [[[[nodeDetail objectForKey:@"field_link"] 
+                                    objectForKey:@"und"] 
+                                   objectAtIndex:0]
+                                  objectForKey:@"value"];
+            
+            subCatNode.linkto = linkURL;
+        }
+        else {
+            MIPLog(@"default");
+            subCatNode.linkto = @"http://www.google.com";
+        }
+        subCatNode.done = NO;
+        
+        /*
+        NSArray *downloadList = [NSArray arrayWithObject:catNode];
+        downloadItemCount = [downloadList count];
+        */
+        DownloadManager *dl = [[DownloadManager alloc] init];
+        dl.delegate = self;
+        [dl startDownloadWithItem:subCatNode];
     }
     
 }
 
 - (void)updateNode:(NSNumber *)nid
 {
-    
+    [operation setValue:@"update" forKey:[NSString stringWithFormat:@"%@",nid]];
+}
+
+- (void)removeNode:(NSNumber *)nid
+{
+    [operation setValue:@"remove" forKey:[NSString stringWithFormat:@"%@",nid]];
 }
 
 - (void)startOperation:(NSDictionary *)metaNode
 {
+    NSString *status = [NSString stringWithFormat:@"Updating Node ID: %@", [metaNode objectForKey:@"nid"]];
+    [self setStatus:status onState:MIPSyncStatusNormal];
+                            
     NSNumber *lastUpdate = [appDelegate lastUpdateForNodeID:[metaNode objectForKey:@"nid"]];
     if (lastUpdate == nil) {
         MIPLog(@"Add new node %@", [metaNode objectForKey:@"nid"]);
@@ -330,21 +437,39 @@ static SyncManager *shared = nil;
     else if (YES) {
         // check for remove node
         MIPLog(@"No update");
+        [self startNextOperation];
     }
 }
 
-- (void)startOperationWithList:(NSArray *)nodeList atIndex:(NSInteger)ind
+- (void)startNextOperation
 {
+    [self finishLastOperationElement];
     //NSNumber *nodeID = [[nodeList objectAtIndex:ind] objectForKey:@"nid"];
     //NSDictionary *nodeDetail = [self getNodeDetail:nodeID];
-    if ([nodeList count] > ind) {
-        [self startOperation:[nodeList objectAtIndex:ind]];
+    if ([self.nodeListForOperation count] > operationIndex) {
+        [self startOperation:[self.nodeListForOperation objectAtIndex:operationIndex]];
+    }
+    else {
+        if ([delegate respondsToSelector:@selector(syncManagerDidFinishSync)]) {
+            [delegate syncManagerDidFinishSync];
+        }
     }
 }
 
-- (void)getLastestVersionNodes {
-    
-    
+- (void)initOperation
+{
+    operationIndex = -1;
+}
+
+- (void)finishLastOperationElement
+{
+
+    ++operationIndex;
+}
+
+
+- (void)getLastestVersionNodes
+{
     DIOSNode *nn = [[DIOSNode alloc] initWithSession:appDelegate.session];
     
     NSMutableArray *connResult = [[NSMutableArray alloc] init];
@@ -387,7 +512,13 @@ static SyncManager *shared = nil;
     //MIPLog(@"---- %@ ----", [nn nodeGetWithCurrentUser]);
     //for (NSDictionary *nodeDetail in connResult) {
         //[checkList addObject:[nodeDetail objectForKey:@"nid"]];
-    [self startOperationWithList:connResult atIndex:0];
+    if (self.nodeListForOperation) {
+        [self.nodeListForOperation release];
+        self.nodeListForOperation = nil;
+    }
+    self.nodeListForOperation = [connResult copy];
+    [self initOperation];
+    [self startNextOperation];
         //MIPLog(@"%@", nodeDetail);
     //}
 

@@ -56,6 +56,8 @@
 
 - (NSNumber *)lastUpdateForNodeID:(NSNumber *)nid
 {
+    //NSMutableArray *mutableFetchResults = [[NSMutableArray alloc] init];
+    
     NSFetchRequest *request = [[NSFetchRequest alloc] init]; 
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Category" 
 											  inManagedObjectContext:self.managedObjectContext]; 
@@ -65,17 +67,54 @@
     [request setPredicate:predicate];
     
 	NSError *error;
-	NSMutableArray *mutableFetchResults = [[self.managedObjectContext 
-											executeFetchRequest:request error:&error] mutableCopy]; 
+	NSArray *results = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy]; 
     
-    if (mutableFetchResults == nil) {
-        NSLog(@"Can't fetch Category");
+    if (results == nil) {
+        MIPLog(@"Can't fetch Category");
+        NSFetchRequest *requestSub = [[NSFetchRequest alloc] init]; 
+        NSEntityDescription *entitySub = [NSEntityDescription entityForName:@"SubCategory" 
+                                                     inManagedObjectContext:self.managedObjectContext]; 
+        [requestSub setEntity:entitySub];
+        
+        NSPredicate *predicateSub = [NSPredicate predicateWithFormat:@"nodeID = %@", nid];
+        [requestSub setPredicate:predicateSub];
+        
+        NSError *errorSub;
+        NSArray *resultSub = [[self.managedObjectContext executeFetchRequest:requestSub error:&errorSub] mutableCopy];
+        if (resultSub == nil) {
+            MIPLog(@"Can't fetch Sub Category");
+        }
+        else if ([resultSub count] != 1) {
+            return nil;
+        }
+        else {
+            return [[resultSub objectAtIndex:0] updateDate];
+        }
     }
-    else if ([mutableFetchResults count] != 1) {
+    else if ([results count] != 1) {
+        NSFetchRequest *requestSub = [[NSFetchRequest alloc] init]; 
+        NSEntityDescription *entitySub = [NSEntityDescription entityForName:@"SubCategory" 
+                                                  inManagedObjectContext:self.managedObjectContext]; 
+        [requestSub setEntity:entitySub];
+        
+        NSPredicate *predicateSub = [NSPredicate predicateWithFormat:@"nodeID = %@", nid];
+        [requestSub setPredicate:predicateSub];
+        
+        NSError *errorSub;
+        NSArray *resultSub = [[self.managedObjectContext executeFetchRequest:requestSub error:&errorSub] mutableCopy];
+        if (resultSub == nil) {
+            MIPLog(@"Can't fetch Sub Category");
+        }
+        else if ([resultSub count] != 1) {
+            return nil;
+        }
+        else {
+            return [[resultSub objectAtIndex:0] updateDate];
+        }
         return nil;
     }
     else {
-        return [[mutableFetchResults objectAtIndex:0] updateDate];
+        return [[results objectAtIndex:0] updateDate];
     }
     
     return nil;

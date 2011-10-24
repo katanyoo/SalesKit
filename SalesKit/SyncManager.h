@@ -40,8 +40,10 @@ typedef enum {
     SalesKitAppDelegate *appDelegate;
     
     DIOSNode *node;
-    
     NSOperationQueue *operationQue;
+    NSMutableDictionary *operation;
+    
+    NSInteger operationIndex;
 }
 
 + (SyncManager *) shared;
@@ -51,6 +53,10 @@ typedef enum {
 - (void)setStatus:(NSString *)status onState:(MIPSyncStatus)state;
 - (IBAction) loginWithUsername:(NSString *)username password:(NSString *)password;
 - (IBAction) logout;
+
+- (void)initOperation;
+- (void)startNextOperation;
+- (void)finishLastOperationElement;
 //- (void)downloadFinish:(NSString *)destinationPath;
 
 //@property (nonatomic, retain) NSArray *updateList;
@@ -61,6 +67,7 @@ typedef enum {
 @property (nonatomic, retain) NSString *menuPath;
 
 @property (nonatomic, retain) DIOSNode *node;
+@property (nonatomic, retain) NSArray *nodeListForOperation;
 
 @end
 
@@ -74,6 +81,8 @@ typedef enum {
 - (void)syncManagerDidFailUpdateDatabase;
 - (void)syncManagerDidFinishLogin:(NSString *)message;
 - (void)syncManagerDidFinishLogout;
+- (void)syncManagerDidFinishSync;
+- (void)syncManagerDidFailSync;
 - (void)updateStatus:(NSString *)status onState:(MIPSyncStatus)state;
 
 @end

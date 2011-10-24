@@ -11,14 +11,14 @@
 
 @implementation DownloadItem
 
-@dynamic updateDate;
-@dynamic pageName;
-@dynamic nodeID;
-@dynamic weight;
+@synthesize updateDate;
+@synthesize pageName;
+@synthesize nodeID;
+@synthesize weight;
 
-@dynamic imagePath;
-@dynamic linkto;
+@synthesize imagePath;
+@synthesize linkto;
 
-@dynamic done;
+@synthesize done;
 
 @end

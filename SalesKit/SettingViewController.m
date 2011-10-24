@@ -40,6 +40,7 @@
 
 #pragma mark - SyncManager Delegate
 
+
 - (void)syncManagerDidFinishUpdateDatabase
 {
     [self endSync];
@@ -101,8 +102,14 @@
     }
 }
 
+- (void) syncManagerDidFinishSync
+{
+    [self updateStatus:@"Finish Sync!!!" onState:MIPSyncStatusFinish];
+}
+
 - (void) updateStatus:(NSString *)status onState:(MIPSyncStatus)state
 {
+    MIPLog(@"%@", status);
     syncStatusView.text = [syncStatusView.text stringByAppendingFormat:@"\n%@", status];
     
     if (state == MIPSyncStatusError) {

@@ -15,11 +15,13 @@
 
 @property (nonatomic, retain) NSNumber * updateDate;
 @property (nonatomic, retain) NSString * pageName;
-@property (nonatomic, retain) NSString * nodeID;
+@property (nonatomic, retain) NSNumber * nodeID;
 @property (nonatomic, retain) NSNumber * weight;
 
 @property (nonatomic, retain) NSString * imagePath;
 @property (nonatomic, retain) NSString * linkto;
+@property (nonatomic, retain) NSString * parentID;
+
 @property (nonatomic, assign) BOOL done;
 
 

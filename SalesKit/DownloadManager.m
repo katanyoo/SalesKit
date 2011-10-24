@@ -62,13 +62,13 @@
     }
     
     [networkQueue go];
-    [[SyncManager shared] setStatus:@"Downloading..." onState:MIPSyncStatusNormal];
+    //[[SyncManager shared] setStatus:@"Downloading..." onState:MIPSyncStatusNormal];
 }
 
 - (void) downloadingItem:(ASIHTTPRequest *)request
 {
     NSString *filename = [[request url] lastPathComponent];
-    [[SyncManager shared] setStatus:filename onState:MIPSyncStatusNormal];
+    //[[SyncManager shared] setStatus:filename onState:MIPSyncStatusNormal];
 }
 
 - (void) downloadItemsComplete:(ASIHTTPRequest *)request
@@ -79,7 +79,7 @@
     
     if (nodeListCount == 0) {
         MIPLog(@"Download Items Complete");
-        [[SyncManager shared] setStatus:@"Download Image Complete" onState:MIPSyncStatusNormal];
+        //[[SyncManager shared] setStatus:@"Download Image Complete" onState:MIPSyncStatusNormal];
     }
     
 }
@@ -89,6 +89,15 @@
     MIPLog(@"Download Items Fail");    
 }
 
+
+- (BOOL) validateUrl: (NSString *) candidate {
+    NSString *urlRegEx =
+    @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
+    NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx]; 
+    return [urlTest evaluateWithObject:candidate];
+}
+
+
 - (void) startDownloadWithItem:(DownloadItem *)item
 {
     
@@ -96,7 +105,7 @@
     if (dlItem) {
         dlItem = nil;
     }
-    dlItem = [item copy];
+    dlItem = item;
     dlItemPathCount = 0;
     
     if (!networkQueue) {
@@ -112,30 +121,30 @@
     
     ASIHTTPRequest *request;
         
-    if (item.imagePath) {
+    if (dlItem.imagePath) {
+        MIPLog(@"downloading image");
         ++dlItemPathCount;
-        NSString *fileName = [item.imagePath lastPathComponent];
-        NSString *destinationPath = [[[appDelegate applicationDocumentsDirectory]
-                                      URLByAppendingPathComponent:fileName] absoluteString];
+        NSString *fileName = [dlItem.imagePath lastPathComponent];
+        NSString *destinationPath = [DOCUMENTSPATH stringByAppendingPathComponent:fileName];
         
-        request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:item.imagePath]];
+        request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:dlItem.imagePath]];
         [request setDownloadDestinationPath:destinationPath];
         [networkQueue addOperation:request];
     }
     
-    if (item.linkto) {
+    if (![self validateUrl:dlItem.linkto] && dlItem.linkto != nil) {
+        MIPLog(@"downloading link");
         ++dlItemPathCount;
-        NSString *fileName = [item.linkto lastPathComponent];
-        NSString *destinationPath = [[[appDelegate applicationDocumentsDirectory]
-                                      URLByAppendingPathComponent:fileName] absoluteString];
+        NSString *fileName = [dlItem.linkto lastPathComponent];
+        NSString *destinationPath = [DOCUMENTSPATH stringByAppendingPathComponent:fileName];
         
-        request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:item.imagePath]];
+        request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:dlItem.linkto]];
         [request setDownloadDestinationPath:destinationPath];
         [networkQueue addOperation:request];
     }
     
     [networkQueue go];
-    [[SyncManager shared] setStatus:@"Downloading..." onState:MIPSyncStatusNormal];
+    //[[SyncManager shared] setStatus:@"Downloading..." onState:MIPSyncStatusNormal];
 }
 
 - (void)downloadComplete:(ASIHTTPRequest *)request
@@ -162,6 +171,7 @@
         }
     }
      */
+    MIPLog(@"download complete : %@", [request url]);
     --dlItemPathCount;
     if (dlItemPathCount == 0) {
         dlItem.done = YES;
@@ -182,6 +192,9 @@
 
 - (void)downloadFailed:(ASIHTTPRequest *)request
 {
+    MIPLog(@"download fail : %@", [[request error] localizedDescription]);
+    MIPLog(@"download fail : %@", [request downloadDestinationPath]);
+    MIPLog(@"download fail : %@", [request url]);
     /*
     NSError *error = [request error];
     //[[SyncManager shared] setStatus:[error localizedDescription] onState:MIPSyncStatusError]; 

@@ -2,7 +2,7 @@
 //  Category.h
 //  SalesKit
 //
-//  Created by Katanyoo Ubalee on 10/23/11.
+//  Created by Katanyoo Ubalee on 10/24/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -16,7 +16,7 @@
 }
 @property (nonatomic, retain) NSNumber * updateDate;
 @property (nonatomic, retain) NSString * pageName;
-@property (nonatomic, retain) NSString * nodeID;
+@property (nonatomic, retain) NSNumber * nodeID;
 @property (nonatomic, retain) NSString * cover;
 @property (nonatomic, retain) NSNumber * weight;
 @property (nonatomic, retain) NSSet* subCategoryItems;
