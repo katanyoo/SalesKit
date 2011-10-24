@@ -130,9 +130,11 @@
         request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:dlItem.imagePath]];
         [request setDownloadDestinationPath:destinationPath];
         [networkQueue addOperation:request];
+        
+        dlItem.imagePath = destinationPath;
     }
     
-    if (![self validateUrl:dlItem.linkto] && dlItem.linkto != nil) {
+    if ((![self validateUrl:dlItem.linkto] || [[dlItem.linkto pathExtension] isEqualToString:@"zip"]) && dlItem.linkto != nil) {
         MIPLog(@"downloading link");
         ++dlItemPathCount;
         NSString *fileName = [dlItem.linkto lastPathComponent];

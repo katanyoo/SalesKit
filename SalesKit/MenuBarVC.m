@@ -41,7 +41,7 @@
 
 #pragma mark - Data Manager
 
-- (void)readData
+- (void)reloadData
 {
     /*
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Menu" ofType:@"plist"];
@@ -108,6 +108,7 @@
     // add the ImageView to the scroll view
     if (itemBar.view.superview == nil)
     {
+        MIPLog(@" ******* add new scroll **********");
         UIScrollView *menuBarScroll = (UIScrollView *)self.view;
         CGRect frame = CGRectMake(self.view.bounds.size.width * page,
                                   0,
@@ -147,7 +148,7 @@
         }
         */
         NSArray *items = [[((Category *)[self.menus objectAtIndex:page]) subCategoryItems] allObjects];
-        MIPLog(@"item count = %i", [items count]);
+        //MIPLog(@"item count = %i", [items count]);
         //MIPLog(@"items = %@", [[items objectAtIndex:0] image]);
         [itemBar setupBarWithItems:items];
         
@@ -211,7 +212,7 @@
 */
 - (void) reloadView
 {
-    [self readData];
+    [self reloadData];
     
     NSMutableArray *views = [[NSMutableArray alloc] init];
     for (unsigned i = 0; i < [self.menus count]; i++)
@@ -239,7 +240,7 @@
 
     self.view.backgroundColor = [UIColor clearColor];
     
-    [self reloadView];
+    //[self reloadView];
 }
 
 

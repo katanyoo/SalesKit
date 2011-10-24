@@ -68,7 +68,7 @@
 {
     [super viewDidLoad];
     
-    MIPLog(@"%@", itemData.image);
+    //MIPLog(@"%@", itemData.image);
 //    UIImage *img = [UIImage imageWithContentsOfFile:
 //                    [DOCUMENTSPATH stringByAppendingPathComponent:itemData.image]];
 

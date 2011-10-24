@@ -47,7 +47,7 @@ typedef enum {
 }
 
 + (SyncManager *) shared;
-- (void)grabURLInBackground:(NSURL *)url;
+//- (void)grabURLInBackground:(NSURL *)url;
 - (void)startSyncWithURL:(NSURL *)url;
 - (void)startSync;
 - (void)setStatus:(NSString *)status onState:(MIPSyncStatus)state;

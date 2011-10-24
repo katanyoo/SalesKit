@@ -225,23 +225,42 @@
 
 #pragma mark - MenuBar Delegate
 
+- (BOOL) validateUrl: (NSString *) candidate {
+    NSString *urlRegEx =
+    @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
+    NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx]; 
+    return [urlTest evaluateWithObject:candidate];
+}
+
+
 - (void)subItemDidSelected:(ItemVC *)item
 {    
     //NSString *htmlPath = [[NSBundle mainBundle] pathForResource:[item URLForWeb] ofType:@""];
-    NSString *htmlPath = [DOCUMENTSPATH stringByAppendingPathComponent:[item URLForWeb]];
-    MIPLog(@"html path = %@", htmlPath);
-    NSString *HTMLData = [NSString stringWithContentsOfFile:htmlPath
-                                                   encoding:NSUTF8StringEncoding 
-                                                      error:nil];
-    
-    //NSString *path = [[NSBundle mainBundle] bundlePath];
-    NSString *path = [htmlPath stringByDeletingLastPathComponent];
-    NSURL *baseURL = [NSURL fileURLWithPath:path];
-    
-    [self.view addSubview:[self viewForEvent:@"Loading..."]];
-    
-    [(UIWebView *)webViewVC.view loadHTMLString:HTMLData baseURL:baseURL];
-    
+    NSString *htmlPath;
+    if ([self validateUrl:[item URLForWeb]]) {
+        htmlPath = [item URLForWeb];
+        
+        [self.view addSubview:[self viewForEvent:@"Loading..."]];
+        NSURLRequest *urlreqest = [NSURLRequest requestWithURL:[NSURL URLWithString:[item URLForWeb]]];
+        
+        [(UIWebView *)webViewVC.view loadRequest:urlreqest];
+    }
+    else {
+        htmlPath = [DOCUMENTSPATH stringByAppendingPathComponent:[item URLForWeb]];
+        
+        MIPLog(@"html path = %@", htmlPath);
+        NSString *HTMLData = [NSString stringWithContentsOfFile:htmlPath
+                                                       encoding:NSUTF8StringEncoding 
+                                                          error:nil];
+        
+        //NSString *path = [[NSBundle mainBundle] bundlePath];
+        NSString *path = [htmlPath stringByDeletingLastPathComponent];
+        NSURL *baseURL = [NSURL fileURLWithPath:path];
+        
+        [self.view addSubview:[self viewForEvent:@"Loading..."]];
+        
+        [(UIWebView *)webViewVC.view loadHTMLString:HTMLData baseURL:baseURL];
+    }
 }
 
 - (void)reloadData
@@ -250,7 +269,7 @@
     pageControl.numberOfPages = [mainScrollVC numberOfPage];
     pageName.text = [mainScrollVC currentPageName];
     
-    [menuBarVC reloadView];
+    [menuBarVC reloadData];
 }
 
 #pragma mark - View lifecycle
@@ -305,6 +324,7 @@
     menuBarVC.delegate = self;
     [menuBarVC reloadView];
     [self.view addSubview:menuBarVC.view];   
+    //[bigView addSubview:menuBarVC.view];
     
     [HMGLTransitionManager sharedTransitionManager];
     
@@ -329,10 +349,9 @@
     rect.origin = CGPointMake(0, 200);
     mainScrollVC.view.frame = rect;
     
-    [self reloadData];
-    
     [bigView addSubview:mainScrollVC.view];
     
+    [self reloadData];
     [self reloadView];
 }
 

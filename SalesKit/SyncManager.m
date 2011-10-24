@@ -290,7 +290,7 @@ static SyncManager *shared = nil;
         // unzip;
     }
     else {
-    
+
     }
     
     if (dlitem.done) {
@@ -299,7 +299,7 @@ static SyncManager *shared = nil;
             [successNode setObject:dlitem.nodeID forKey:@"nid"];
             [successNode setObject:dlitem.updateDate forKey:@"changed"];
             [successNode setObject:dlitem.pageName forKey:@"title"];
-            [successNode setObject:[request downloadDestinationPath] forKey:@"cover"];
+            [successNode setObject:dlitem.imagePath forKey:@"cover"];
             [successNode setObject:dlitem.weight forKey:@"weight"];
             
             if ([[operation valueForKey:[NSString stringWithFormat:@"%@", dlitem.nodeID]] isEqualToString:@"add"]) {
@@ -312,7 +312,7 @@ static SyncManager *shared = nil;
             [successNode setObject:dlitem.nodeID forKey:@"nid"];
             [successNode setObject:dlitem.updateDate forKey:@"changed"];
             [successNode setObject:dlitem.pageName forKey:@"title"];
-            [successNode setObject:[request downloadDestinationPath] forKey:@"image"];
+            [successNode setObject:dlitem.imagePath forKey:@"image"];
             [successNode setObject:dlitem.weight forKey:@"weight"];
             [successNode setObject:dlitem.linkto forKey:@"linkto"];
             [successNode setObject:dlitem.parentNodeID forKey:@"parentNodeID"];
@@ -400,6 +400,7 @@ static SyncManager *shared = nil;
             NSString *filePath = [[[NSURL URLWithString:BASE_FILES_URL] URLByAppendingPathComponent:fileName] absoluteString];
             
             subCatNode.linkto = filePath;
+            MIPLog(@"linkto %@", filePath);
         }
         else if (![[nodeDetail objectForKey:@"field_link"] isKindOfClass:[NSArray class]]) {
             MIPLog(@"link");

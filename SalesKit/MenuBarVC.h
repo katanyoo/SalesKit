@@ -35,6 +35,7 @@
 @property (nonatomic, assign) id<MenuBarVCDelegate> delegate;
 
 - (void) reloadView;
+- (void) reloadData;
 - (void)scrollToPage:(NSInteger)page;
 
 @end
